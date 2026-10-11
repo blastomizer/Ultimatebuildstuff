@@ -1,5 +1,3 @@
-print("test")
-
 local Game = getfenv().game
 
 local Workspace = Game:GetService("Workspace")
