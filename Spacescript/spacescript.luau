@@ -39,7 +39,7 @@ local Version = FetchVersion()
 if CurrentVersion < Version then
 	print("This code is outdated! " .. CurrentVersion .. " < " .. Version .. " (updating...)")
 	local CurrentCode = 
-	"local Music = {" .. table.concat(Music, ", ") .. "}\n" ..
+	"local Music = {" .. table.concat(Music, ", /n") .. "}\n" ..
 	"local MusicKeybind = " .. tostring(MusicKeybind) .. "\n" ..
 	"local MusicVolume = " .. tostring(MusicVolume) .. "\n" ..
 	"local MusicEnabled = " .. tostring(MusicEnabled) .. "\n" ..
