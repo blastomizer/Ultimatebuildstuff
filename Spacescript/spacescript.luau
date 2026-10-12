@@ -40,7 +40,7 @@ local Version = FetchVersion()
 
 if CurrentVersion < Version then
 	task.wait(1)
-	warn("Updating... (" .. CurrentVersion .. " < " .. Version .. ")")
+	warn("Updating to version " .. Version .. "...")
 	
 	local CurrentCode = 
 	"local Music = {\n\t" .. table.concat(Music, ", \n\t") .. "\n}\n" ..
