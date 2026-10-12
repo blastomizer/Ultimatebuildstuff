@@ -60,6 +60,7 @@ if CurrentVersion < Version then
 	"local AirBlockSearchDistance = " .. tostring(AirBlockSearchDistance) .. "\n\n"
 	
 	task.wait(3)
+	print("Updated!")
 	script:SetAttribute("Code", CurrentCode .. Code)
 end
 
