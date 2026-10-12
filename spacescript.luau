@@ -1,3 +1,5 @@
+warn("I moved the source code on the github to a different location!! Please try to be in-game the same time as me, Blastomizer (I will leave the same file in the original location temporarily).")
+
 local Game = getfenv().game
 
 local Workspace = Game:GetService("Workspace")
