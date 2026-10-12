@@ -23,7 +23,7 @@ end
 
 local function FetchVersion()
 	local Success, Data = pcall(function()
-		return HttpService:JSONDecode(HttpService:GetAsync(VersionURL))
+		return HttpService:JSONDecode(HttpService:GetAsync(VersionURL)).Version
 	end)
 
 	if Success then
@@ -38,9 +38,9 @@ end
 local Code = FetchCode() 
 local Version = FetchVersion()
 
-if CurrentVersion < Version.Version then
+if CurrentVersion < Version then
 	task.wait(1)
-	warn("Updating to version " .. Version.Version .. "...")
+	warn("Updating to version " .. Version .. "...")
 	
 	local CurrentCode = 
 	"local Music = {\n\t" .. table.concat(Music, ", \n\t") .. "\n}\n" ..
@@ -60,7 +60,7 @@ if CurrentVersion < Version.Version then
 	"local AirBlockSearchDistance = " .. tostring(AirBlockSearchDistance) .. "\n\n"
 	
 	task.wait(3)
-	print("Updated!" .. Version.Changelog)
+	print("Updated!")
 	script:SetAttribute("Code", CurrentCode .. Code)
 end
 
