@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------
 
-local CurrentVersion = 4
+local CurrentVersion = 5
 
 local HttpService = game:GetService("HttpService")
 
