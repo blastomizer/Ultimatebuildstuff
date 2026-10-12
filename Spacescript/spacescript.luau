@@ -1,3 +1,30 @@
+local Music = {
+	102008524192296, 
+	102008524192296, 
+	94807404649914, 
+	105934506540092, 
+	115767212629752, 
+	139488665764275, 
+	9045966970, 
+	1844431363, 
+	1836984809, 
+	74189412399190
+}
+local MusicKeybind = Enum.KeyCode.M
+local MusicVolume = 0.5
+local MusicEnabled = true
+local PopupNowPlaying = true
+local DefaultGravityConstant = 196.2
+local SpaceGravityConstant = 0
+local SpaceHeightConstant = 150000
+local SunAngularSize = 10
+local MoonAngularSize = 2
+local SunRaysIntensity = 0.5
+local SunRaySpread = 0.1
+local SunTextureId = 4173924347
+local MoonTextureId = 9027816797
+local AirBlockSearchDistance = 2048
+
 ---------------------------------------------------------------------------------------------
 
 local CurrentVersion = 3
@@ -39,9 +66,11 @@ local Code = FetchCode()
 local Version = FetchVersion()
 
 if CurrentVersion < Version then
+	task.wait(1)
 	warn("Updating... (" .. CurrentVersion .. " < " .. Version .. ")")
+	
 	local CurrentCode = 
-	"local Music = {\n" .. table.concat(Music, ", \n") .. "\n}\n" ..
+	"local Music = {\n\t" .. table.concat(Music, ", \n\t") .. "\n}\n" ..
 	"local MusicKeybind = " .. tostring(MusicKeybind) .. "\n" ..
 	"local MusicVolume = " .. tostring(MusicVolume) .. "\n" ..
 	"local MusicEnabled = " .. tostring(MusicEnabled) .. "\n" ..
@@ -53,11 +82,11 @@ if CurrentVersion < Version then
 	"local MoonAngularSize = " .. tostring(MoonAngularSize) .. "\n" ..
 	"local SunRaysIntensity = " .. tostring(SunRaysIntensity) .. "\n" ..
 	"local SunRaySpread = " .. tostring(SunRaySpread) .. "\n" ..
-	"local SunTextureId = " .. tostring(SunTextureId) .. "\n" ..
-	"local MoonTextureId = " .. tostring(MoonTextureId) .. "\n" ..
+	"local SunTextureId = \"" .. tostring(SunTextureId) .. "\"\n" ..
+	"local MoonTextureId = \"" .. tostring(MoonTextureId) .. "\"\n" ..
 	"local AirBlockSearchDistance = " .. tostring(AirBlockSearchDistance) .. "\n\n"
-
-	task.wait(2)
+	
+	task.wait(3)
 	script:SetAttribute("Code", CurrentCode .. Code)
 end
 
