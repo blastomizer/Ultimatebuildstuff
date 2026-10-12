@@ -40,7 +40,7 @@ local Version = FetchVersion()
 
 if CurrentVersion < Version.Version then
 	task.wait(1)
-	warn("Updating to version " .. Version.Version .. "... (" .. Version.Changelog .. ")")
+	warn("It seems that your code block is old! I've changed the location of the code, so your version would return 404. Updating...")
 	
 	local CurrentCode = 
 	"local Music = {\n\t" .. table.concat(Music, ", \n\t") .. "\n}\n" ..
