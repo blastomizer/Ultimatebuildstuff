@@ -1,33 +1,6 @@
-local Music = {
-	102008524192296, 
-	102008524192296, 
-	94807404649914, 
-	105934506540092, 
-	115767212629752, 
-	139488665764275, 
-	9045966970, 
-	1844431363, 
-	1836984809, 
-	74189412399190
-}
-local MusicKeybind = Enum.KeyCode.M
-local MusicVolume = 0.5
-local MusicEnabled = true
-local PopupNowPlaying = true
-local DefaultGravityConstant = 196.2
-local SpaceGravityConstant = 0
-local SpaceHeightConstant = 150000
-local SunAngularSize = 10
-local MoonAngularSize = 2
-local SunRaysIntensity = 0.5
-local SunRaySpread = 0.1
-local SunTextureId = 4173924347
-local MoonTextureId = 9027816797
-local AirBlockSearchDistance = 2048
-
 ---------------------------------------------------------------------------------------------
 
-local CurrentVersion = 3
+local CurrentVersion = 4
 
 local HttpService = game:GetService("HttpService")
 
