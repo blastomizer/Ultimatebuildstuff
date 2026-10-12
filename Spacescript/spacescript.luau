@@ -1,4 +1,6 @@
-local CurrentVersion = 1
+local CurrentVersion = 2
+
+print("test, you should see this if the script updated")
 
 local HttpService = game:GetService("HttpService")
 
