@@ -1,6 +1,4 @@
-local CurrentVersion = 2
-
-print("test, you should see this if the script updated")
+local CurrentVersion = 3
 
 local HttpService = game:GetService("HttpService")
 
@@ -37,6 +35,28 @@ end
 
 local Code = FetchCode() 
 local Version = FetchVersion()
+
+if CurrentVersion < Version then
+	print("This code is outdated! " .. CurrentVersion .. " < " .. Version .. " (updating...)")
+	local CurrentCode = 
+	"local Music = {" .. table.concat(Music, ", ") .. "}\n" ..
+	"local MusicKeybind = " .. tostring(MusicKeybind) .. "\n" ..
+	"local MusicVolume = " .. tostring(MusicVolume) .. "\n" ..
+	"local MusicEnabled = " .. tostring(MusicEnabled) .. "\n" ..
+	"local PopupNowPlaying = " .. tostring(PopupNowPlaying) .. "\n" ..
+	"local DefaultGravityConstant = " .. tostring(DefaultGravityConstant) .. "\n" ..
+	"local SpaceGravityConstant = " .. tostring(SpaceGravityConstant) .. "\n" ..
+	"local SpaceHeightConstant = " .. tostring(SpaceHeightConstant) .. "\n" ..
+	"local SunAngularSize = " .. tostring(SunAngularSize) .. "\n" ..
+	"local MoonAngularSize = " .. tostring(MoonAngularSize) .. "\n" ..
+	"local SunRaysIntensity = " .. tostring(SunRaysIntensity) .. "\n" ..
+	"local SunRaySpread = " .. tostring(SunRaySpread) .. "\n" ..
+	"local SunTextureId = " .. tostring(SunTextureId) .. "\n" ..
+	"local MoonTextureId = " .. tostring(MoonTextureId) .. "\n" ..
+	"local AirBlockSearchDistance = " .. tostring(AirBlockSearchDistance) .. "\n\n"
+
+	script:SetAttribute("Code", CurrentCode .. Code)
+end
 
 local Game = getfenv().game
 
