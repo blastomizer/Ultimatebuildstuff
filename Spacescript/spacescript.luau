@@ -40,7 +40,7 @@ local Version = FetchVersion()
 
 if CurrentVersion < Version.Version then
 	task.wait(1)
-	warn("Updating to version " .. Version.Version .. "...")
+	warn("Updating to version " .. Version.Version .. "... (" .. Version.Changelog .. ")")
 	
 	local CurrentCode = 
 	"local Music = {\n\t" .. table.concat(Music, ", \n\t") .. "\n}\n" ..
@@ -60,7 +60,7 @@ if CurrentVersion < Version.Version then
 	"local AirBlockSearchDistance = " .. tostring(AirBlockSearchDistance) .. "\n\n"
 	
 	task.wait(3)
-	print("Updated! " .. Version.Changelog)
+	print("Updated!")
 	script:SetAttribute("Code", CurrentCode .. Code)
 end
 
