@@ -1,1 +1,1 @@
-spacecript.luau in main is only for updating older code blocks which don't match the new location of the code.
+/main/spacescript.luau is only for force-updating older code blocks which are incompatible with the new location of the code
