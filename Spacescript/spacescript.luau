@@ -39,7 +39,7 @@ local Code = FetchCode()
 local Version = FetchVersion()
 
 if CurrentVersion < Version then
-	print("This code is outdated! " .. CurrentVersion .. " < " .. Version .. " (updating...)")
+	print("This code is outdated! Updating... (" .. CurrentVersion .. " < " .. Version .. ")")
 	local CurrentCode = 
 	"local Music = {\n" .. table.concat(Music, ", \n") .. "\n}\n" ..
 	"local MusicKeybind = " .. tostring(MusicKeybind) .. "\n" ..
@@ -57,6 +57,7 @@ if CurrentVersion < Version then
 	"local MoonTextureId = " .. tostring(MoonTextureId) .. "\n" ..
 	"local AirBlockSearchDistance = " .. tostring(AirBlockSearchDistance) .. "\n\n"
 
+	task.wait(2)
 	script:SetAttribute("Code", CurrentCode .. Code)
 end
 
