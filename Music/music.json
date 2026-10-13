@@ -199,6 +199,8 @@
     },
     {
         "Songs": [
+            { "Pitch": 1, "Title": "Kevin Macleod - Latin Industries", "SoundID": 113042071176768 },
+            { "Pitch": 1, "Title": "AleinThing", "SoundID": 126672265282754 },
             { "Pitch": 1, "Title": "C418 - Minecraft", "SoundID": 91986879922479 },
             { "Pitch": 1, "Title": "Diarrhea poo poo", "SoundID": 133432631312049 },
             { "Pitch": 1, "Title": "Give You All My Love", "SoundID": 9046546373 },
