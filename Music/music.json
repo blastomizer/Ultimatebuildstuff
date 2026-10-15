@@ -338,6 +338,9 @@
     },
     {
         "Songs": [
+            { "Pitch": 1, "Title": "minimans - UB song", "SoundID": 120169692276267.98 },
+            { "Pitch": 1, "Title": "Ultimate Build - Obsessed", "SoundID": 77417277350496 },
+            { "Pitch": 1, "Title": "Blastomizer Near Demotion", "SoundID": 90528979076637 },
             { "Pitch": 1, "Title": "We Only Guzzle Diesel", "SoundID": 132048714154476 },
             { "Pitch": 1, "Title": "Bass Pro Shop Baptism", "SoundID": 131922340015119 },
             { "Pitch": 1, "Title": "6-7 GABBER", "SoundID": 99115858443105 },
