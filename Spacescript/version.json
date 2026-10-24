@@ -1,4 +1,4 @@
 {
-  "Version": 6,
-  "Changelog": "Changelog test"
+  "Version": 7,
+  "Changelog": "Added greeting on run (very important)"
 }
