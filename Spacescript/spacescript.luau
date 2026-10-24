@@ -1,6 +1,8 @@
 ---------------------------------------------------------------------------------------------
 
-local CurrentVersion = 6
+print("Running Outerspace (Spacescript)... Thanks for using!")
+
+local CurrentVersion = 7
 
 local HttpService = game:GetService("HttpService")
 
