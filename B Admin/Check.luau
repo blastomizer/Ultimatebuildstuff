@@ -1,4 +1,4 @@
-function CheckIfWhitelisted()
+local function CheckWhitelist2()
 	local URL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/Whitelist.json"
 	local HttpService = game:GetService("HttpService")
 	
@@ -24,3 +24,5 @@ function CheckIfWhitelisted()
 		return CheckIfWhitelisted()
 	end
 end
+
+CheckWhitelist2()
