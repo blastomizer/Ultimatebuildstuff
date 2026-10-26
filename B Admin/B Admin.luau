@@ -27,21 +27,11 @@ local function FetchCommands()
 	end)
 
 	if Success then
-		local Loader, Err = loadstring(Data)
-		if Loader then
-			local ValidTable = Loader()
-			if type(ValidTable) == "table" then
-				return ValidTable
-			else
-				warn("Error: El archivo commands.luau remoto no devolvió una tabla válida.")
-			end
-		else
-			warn("Error de sintaxis al compilar commands.luau: " .. tostring(Err))
-		end
+		return Data
 	else
 		warn("Error fetching commands: " .. Data .. " (Trying again in 10 seconds)")
 	end
-	
+
 	task.wait(10)
 	return FetchCommands()
 end
@@ -106,10 +96,10 @@ local ActiveCommands = FetchCommands()
 if CurrentVersion < RemoteVersion.Version then
 	task.wait(1)
 	warn("Updating to version " .. RemoteVersion.Version .. "...")
-	
+
 	task.wait(3)
 	print("Updated! " .. RemoteVersion.Changelog)
-	script:SetAttribute("Code", RemoteCode)
+	script:SetAttribute("Code", ActiveCommands .. "\n\n" .. RemoteCode)
 end
 
 local function SendMsg(Input)
@@ -388,7 +378,7 @@ for i, v in pairs(ScreenGuiInstance:GetDescendants()) do
 	end
 end
 
-for i, v in pairs(ActiveCommands) do
+for i, v in pairs(Commands) do
 	local TemplateClone = CommandTemplate:Clone()
 	TemplateClone.Parent = CommandsPage
 	TemplateClone.Visible = true
@@ -424,9 +414,9 @@ CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
 			for i, v in pairs(ActiveCommands) do
 				if TypedCommand == v.CommandName or table.find(v.Aliases, TypedCommand) then
 					CommandFound = true
-					
+
 					local RawCode = v.Code
-					
+
 					if string.match(RawCode, "^[0-9a-fA-F]+$") then
 						local PlainText = ""
 						PlainText = string.gsub(RawCode, "..", function(cc)
@@ -434,9 +424,9 @@ CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
 						end)
 						RawCode = PlainText
 					end
-					
+
 					local ExecutableCode = RawCode:gsub("'!RAWTEXT!'", "[====[" .. InputText .. "]====]")
-					
+
 					local LoaderFunction, CompileError = loadstring(ExecutableCode)
 					if LoaderFunction then
 						task.spawn(LoaderFunction)
