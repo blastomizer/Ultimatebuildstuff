@@ -4,6 +4,7 @@ local HttpService = game:GetService("HttpService")
 
 local CodeURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/B%20Admin.luau"
 local VersionURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/version.json"
+local CommandsURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/commands.luau"
 
 local function FetchCode()
 	local Success, Data = pcall(function()
@@ -16,6 +17,20 @@ local function FetchCode()
 		warn("Error fetching code: " .. Data .. " (Trying again in 10 seconds)")
 		task.wait(10)
 		return FetchCode()
+	end
+end
+
+local function FetchCommands()
+	local Success, Data = pcall(function()
+		return HttpService:GetAsync(CommandsURL)
+	end)
+
+	if Success then
+		return Data
+	else
+		warn("Error fetching commands: " .. Data .. " (Trying again in 10 seconds)")
+		task.wait(10)
+		return FetchCommands()
 	end
 end
 
@@ -35,6 +50,7 @@ end
 
 local Code = FetchCode() 
 local Version = FetchVersion()
+local Commands = FetchCommands()
 
 if CurrentVersion < Version.Version then
 	task.wait(1)
