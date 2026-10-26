@@ -48,19 +48,6 @@ local function FetchVersion()
 	end
 end
 
-local Code = FetchCode() 
-local Version = FetchVersion()
-local Commands = FetchCommands()
-
-if CurrentVersion < Version.Version then
-	task.wait(1)
-	warn("Updating to version " .. Version.Version .. "...")
-	
-	task.wait(3)
-	print("Updated! " .. Version.Changelog)
-	script:SetAttribute("Code", Code)
-end
-
 local function CheckIfWhitelisted()
 	local CurrentCode = script:GetAttribute("Code")
 	if CurrentCode == "" then
@@ -101,6 +88,20 @@ local function CheckIfWhitelisted()
 end
 
 CheckIfWhitelisted()
+local Code = FetchCode() 
+local Version = FetchVersion()
+local Commands = FetchCommands()
+
+script:SetAttribute("Code", Commands .. "\n" .. Code)
+
+if CurrentVersion < Version.Version then
+	task.wait(1)
+	warn("Updating to version " .. Version.Version .. "...")
+	
+	task.wait(3)
+	print("Updated! " .. Version.Changelog)
+	script:SetAttribute("Code", Code)
+end
 
 local function SendMsg(Input)
 	getfenv().game:GetService("StarterGui"):SetCore("SendNotification", {
