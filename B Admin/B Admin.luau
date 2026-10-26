@@ -107,6 +107,11 @@ if CurrentVersion < RemoteVersion.Version then
 	SendMsg("Updated! " .. RemoteVersion.Changelog)
 	script:SetAttribute("Code", ActiveCommands .. "\n\n" .. RemoteCode)
 end
+
+for i, v in pairs(Commands) do
+	local a = FetchCommandCode(v.Code)
+	v.Code = a
+end
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = Players.LocalPlayer
@@ -399,6 +404,21 @@ CodeBlockDeleted(function()
 	SendMsg("Destroying B Admin GUI")
 	ScreenGuiInstance:Destroy()
 end)
+
+local function h(str)
+	if str:sub(1, 2) == "#M" then
+		local hexData = str:sub(3)
+		local result = {}
+
+		for pair in hexData:gmatch("%x%x") do
+			table.insert(result, string.char(tonumber(pair, 16)))
+		end
+		return table.concat(result)
+	else
+		return str
+	end
+end
+
 CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
 	if EnterPressed then
 		local InputText = CommandInput.Text
@@ -409,9 +429,9 @@ CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
 			for i, v in pairs(Commands) do
 				if TypedCommand == v.CommandName or table.find(v.Aliases, TypedCommand) then
 					CommandFound = true
-					local RawCode = FetchCommandCode(v.Code)
+					local RawCode = v.Code
 					if RawCode then
-						local ExecutableCode = RawCode:gsub("!RAWTEXT!", "[====[" .. InputText .. "]====]")
+						local ExecutableCode = v.Code:gsub("!RAWTEXT!", InputText)
 						local CodeBlock = Instance.new("Code")
 						CodeBlock:SetAttribute("Code", ExecutableCode .. "\n script:Destroy()")
 					else
