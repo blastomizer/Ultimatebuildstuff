@@ -3,7 +3,7 @@ local success, result = pcall(function()
 	local RawText = "!RAWTEXT!"
 	local Parameters = string.split(RawText, " ")
 	local p1 = Parameters[2]
-	local p2 = Parameters[3]
+	local p2 = Paremeters[3]
 	local Players = getfenv().game:GetService("Players")
 	local LocalPlayer = Players.LocalPlayer
 	local function search(input)
@@ -33,17 +33,16 @@ local success, result = pcall(function()
 		return matches
 	end
 	local list1 = search(p1)
-	local list2 = search(p2)
+	local list2 = {LocalPlayer}
 	for _, plr1 in ipairs(list1) do
 		for _, plr2 in ipairs(list2) do
 			if plr1 and plr2 and plr1.Character:FindFirstChild("HumanoidRootPart") and plr2.Character:FindFirstChild("HumanoidRootPart") then
 				task.spawn(function()
 					local plr1CFrame = plr1.Character:GetPivot()
 					local Seat = Instance.new("Seat")
-					Seat.Transparency = 0.8
+					Seat.Transparency = 1
 					Seat.Anchored = true
 					Seat.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position
-					Seat.Parent = workspace
 					task.wait(0.5)
 					local plr2CFrame = plr2.Character:GetPivot()
 					Seat.CFrame = plr2CFrame
