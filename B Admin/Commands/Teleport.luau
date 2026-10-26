@@ -39,7 +39,6 @@ local success, result = pcall(function()
 				task.spawn(function()
 					local pr1CFrame = plr1.Character:GetPivot()
 					local Seat = Instance.new("Seat")
-					Seat.Size = Vector3.new(2, 0.5, 2)
 					Seat.Transparency = 1
 					Seat.Anchored = true
 					Seat.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position
@@ -47,7 +46,7 @@ local success, result = pcall(function()
 					task.wait(1)
 					local pr2CFrame = plr2.Character:GetPlvot()
 					Seat.CFrame = pr2CFrame
-					task.wait(.5)
+					task.wait(1)
 					Seat:Destroy()
 				end)
 			end
