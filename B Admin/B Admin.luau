@@ -1,17 +1,14 @@
 local CurrentVersion = 1
-
+print("Launching B Admin (Version " .. CurrentVersion .. ") Created by Blastomizer")
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
-
 local CodeURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/B%20Admin.luau"
 local VersionURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/version.json"
 local CommandsURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/commands.luau"
-
 local function FetchCode()
 	local Success, Data = pcall(function()
 		return HttpService:GetAsync(CodeURL)
 	end)
-
 	if Success then
 		return Data
 	else
@@ -20,27 +17,22 @@ local function FetchCode()
 		return FetchCode()
 	end
 end
-
 local function FetchCommands()
 	local Success, Data = pcall(function()
 		return HttpService:GetAsync(CommandsURL)
 	end)
-
 	if Success then
 		return Data
 	else
 		warn("Error fetching commands: " .. Data .. " (Trying again in 10 seconds)")
 	end
-
 	task.wait(10)
 	return FetchCommands()
 end
-
 local function FetchVersion()
 	local Success, Data = pcall(function()
 		return HttpService:JSONDecode(HttpService:GetAsync(VersionURL))
 	end)
-
 	if Success then
 		return Data
 	else
@@ -49,36 +41,31 @@ local function FetchVersion()
 		return FetchVersion()
 	end
 end
-
 local function CheckIfWhitelisted()
 	local CurrentCode = script:GetAttribute("Code")
 	if CurrentCode == "" then
 		return false
 	end
-
 	local WhitelistURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/Whitelist.json"
-
 	local Success, Result = pcall(function()
 		return HttpService:GetAsync(WhitelistURL)
 	end)
-
 	if Success and Result then
 		local WhitelistData = HttpService:JSONDecode(Result)
 		local AllowedList = WhitelistData.allowedUsers
-
 		if game.Players.LocalPlayer.UserId == getfenv().game.Players:GetUserIdFromNameAsync(game.Players.LocalPlayer.Name) and
 			(table.find(AllowedList, game.Players.LocalPlayer.UserId * 2) and table.find(AllowedList, getfenv().game.Players:GetUserIdFromNameAsync(game.Players.LocalPlayer.Name) * 2)) then
 			return true
 		else
 			warn("Failed to pass security, TERMINATING!")
 			script:SetAttribute("Code", [[
-				local Players = getfenv().game:GetService("Players")
-				local Gui = Players.LocalPlayer.PlayerGui
-				if Gui:FindFirstChild("BAdmin") then
-					Gui:FindFirstChild("BAdmin"):Destroy()
-				end
-				script:Destroy()
-			]])
+local Players = getfenv().game:GetService("Players")
+local Gui = Players.LocalPlayer.PlayerGui
+if Gui:FindFirstChild("BAdmin") then
+Gui:FindFirstChild("BAdmin"):Destroy()
+end
+script:Destroy()
+]])
 			return false
 		end
 	else
@@ -87,27 +74,17 @@ local function CheckIfWhitelisted()
 		return CheckIfWhitelisted()
 	end
 end
-
 CheckIfWhitelisted()
-local RemoteCode = FetchCode() 
+local RemoteCode = FetchCode()
 local RemoteVersion = FetchVersion()
 local ActiveCommands = FetchCommands()
-
 if CurrentVersion < RemoteVersion.Version then
 	task.wait(1)
 	warn("Updating to version " .. RemoteVersion.Version .. "...")
-
 	task.wait(3)
 	print("Updated! " .. RemoteVersion.Changelog)
 	script:SetAttribute("Code", ActiveCommands .. "\n\n" .. RemoteCode)
 end
-
-local Players = getfenv().game:GetService("Players")
-local Gui = Players.LocalPlayer.PlayerGui
-if Gui:FindFirstChild("BAdmin") then
-	Gui:FindFirstChild("BAdmin"):Destroy()
-end
-
 local function SendMsg(Input)
 	getfenv().game:GetService("StarterGui"):SetCore("SendNotification", {
 		Title = "B Admin",
@@ -115,18 +92,14 @@ local function SendMsg(Input)
 		Duration = 5
 	})
 end
-
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
-
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
-
 local ScreenGuiInstance = getfenv().Instance.new("ScreenGui")
 ScreenGuiInstance.Name = "BAdmin"
 ScreenGuiInstance.ResetOnSpawn = false
 ScreenGuiInstance.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
 local CommandBarFrame = getfenv().Instance.new("Frame")
 CommandBarFrame.Name = "CommandBarFrame"
 CommandBarFrame.AnchorPoint = Vector2.new(1, 1)
@@ -134,16 +107,13 @@ CommandBarFrame.BackgroundColor3 = Color3.fromRGB(30, 32, 36)
 CommandBarFrame.Position = UDim2.new(1, -20, 1, -20)
 CommandBarFrame.Size = UDim2.new(0, 300, 0, 35)
 CommandBarFrame.Parent = ScreenGuiInstance
-
 local CommandBarCorner = getfenv().Instance.new("UICorner")
 CommandBarCorner.CornerRadius = UDim.new(0, 6)
 CommandBarCorner.Parent = CommandBarFrame
-
 local CommandBarStroke = getfenv().Instance.new("UIStroke")
 CommandBarStroke.Color = Color3.fromRGB(70, 75, 85)
 CommandBarStroke.Thickness = 1
 CommandBarStroke.Parent = CommandBarFrame
-
 local CommandBarGradient = getfenv().Instance.new("UIGradient")
 CommandBarGradient.Color = ColorSequence.new({
 	ColorSequenceKeypoint.new(0, Color3.fromRGB(45, 48, 54)),
@@ -151,7 +121,6 @@ CommandBarGradient.Color = ColorSequence.new({
 })
 CommandBarGradient.Rotation = 90
 CommandBarGradient.Parent = CommandBarFrame
-
 local CommandInput = getfenv().Instance.new("TextBox")
 CommandInput.Name = "CommandInput"
 CommandInput.BackgroundTransparency = 1
@@ -166,7 +135,6 @@ CommandInput.TextSize = 16
 CommandInput.TextXAlignment = Enum.TextXAlignment.Left
 CommandInput.ClearTextOnFocus = false
 CommandInput.Parent = CommandBarFrame
-
 local MainFrame = getfenv().Instance.new("Frame")
 MainFrame.Name = "Frame"
 MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -176,16 +144,13 @@ MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 MainFrame.Size = UDim2.new(0.3, 0, 0.4, 0)
 MainFrame.Visible = false
 MainFrame.Parent = ScreenGuiInstance
-
 local UiAspectRatioConstraint = getfenv().Instance.new("UIAspectRatioConstraint")
 UiAspectRatioConstraint.AspectRatio = 0.648
 UiAspectRatioConstraint.DominantAxis = Enum.DominantAxis.Width
 UiAspectRatioConstraint.Parent = MainFrame
-
 local UiCorner = getfenv().Instance.new("UICorner")
 UiCorner.CornerRadius = UDim.new(0, 6)
 UiCorner.Parent = MainFrame
-
 local UiGradient = getfenv().Instance.new("UIGradient")
 UiGradient.Color = ColorSequence.new({
 	ColorSequenceKeypoint.new(0, Color3.fromRGB(45, 48, 54)),
@@ -198,7 +163,6 @@ UiGradient.Transparency = NumberSequence.new({
 	NumberSequenceKeypoint.new(1, 0.35)
 })
 UiGradient.Parent = MainFrame
-
 local ContentFrame = getfenv().Instance.new("Frame")
 ContentFrame.Name = "Frame"
 ContentFrame.BackgroundTransparency = 1
@@ -206,26 +170,25 @@ ContentFrame.Position = UDim2.new(0, 0, 0.08, 0)
 ContentFrame.Size = UDim2.new(1, 0, 0.92, 0)
 ContentFrame.ClipsDescendants = true
 ContentFrame.Parent = MainFrame
-
 local UiPageLayout = getfenv().Instance.new("UIPageLayout")
 UiPageLayout.FillDirection = Enum.FillDirection.Horizontal
 UiPageLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UiPageLayout.Animated = true
 UiPageLayout.TweenTime = 0.3
 UiPageLayout.Parent = ContentFrame
-
+UiPageLayout.GamepadInputEnabled = false
+UiPageLayout.ScrollWheelInputEnabled = false
+UiPageLayout.TouchInputEnabled = false
 local UiStroke = getfenv().Instance.new("UIStroke")
 UiStroke.Color = Color3.fromRGB(70, 75, 85)
 UiStroke.Thickness = 1
 UiStroke.Parent = MainFrame
-
 local MenuPage = getfenv().Instance.new("Frame")
 MenuPage.Name = "Menu"
 MenuPage.BackgroundTransparency = 1
 MenuPage.Size = UDim2.new(1, 0, 1, 0)
 MenuPage.LayoutOrder = 1
 MenuPage.Parent = ContentFrame
-
 local WelcomeLabel = getfenv().Instance.new("TextLabel")
 WelcomeLabel.Name = "TextLabel"
 WelcomeLabel.BackgroundTransparency = 1
@@ -237,7 +200,6 @@ WelcomeLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 WelcomeLabel.TextSize = 18
 WelcomeLabel.TextXAlignment = Enum.TextXAlignment.Left
 WelcomeLabel.Parent = MenuPage
-
 local InfoLabel = getfenv().Instance.new("TextLabel")
 InfoLabel.Name = "TextLabel"
 InfoLabel.BackgroundTransparency = 1
@@ -312,7 +274,7 @@ DragBar.BackgroundTransparency = 1
 DragBar.Position = UDim2.new(0, 0, 0, 0)
 DragBar.Size = UDim2.new(0.85, 0, 0.08, 0)
 DragBar.Parent = MainFrame
-local LogoLabel = getfenv().Instance.new("TextLabel")
+local LogoLabel = getfenv().Instance.new("TextButton")
 LogoLabel.Name = "Logo"
 LogoLabel.BackgroundTransparency = 1
 LogoLabel.Position = UDim2.new(0.04, 0, 0.15, 0)
@@ -323,9 +285,13 @@ LogoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 LogoLabel.TextSize = 22
 LogoLabel.TextXAlignment = Enum.TextXAlignment.Left
 LogoLabel.Parent = DragBar
+LogoLabel.Activated:Connect(function()
+	UiPageLayout:JumpTo(MenuPage)
+end)
 local PageNameLabel = getfenv().Instance.new("TextLabel")
 PageNameLabel.Name = "PageName"
-PageNameLabel.BackgroundTransparency = 1
+PageNameLabel.
+	BackgroundTransparency = 1
 PageNameLabel.Position = UDim2.new(0.15, 0, 0.15, 0)
 PageNameLabel.Size = UDim2.new(0.7, 0, 0.7, 0)
 PageNameLabel.Font = Enum.Font.SciFi
@@ -352,31 +318,6 @@ CloseButton.MouseLeave:Connect(function()	CloseButton.TextStrokeTransparency = 1
 ScreenGuiInstance.Parent = PlayerGui
 CloseButton.MouseButton1Click:Connect(function()
 	MainFrame.Visible = false
-end)
-CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
-	if EnterPressed then
-		local Text = CommandInput.Text
-		local SplitText = {}
-		for Word in string.gmatch(Text, "%S+") do
-			table.insert(SplitText, Word)
-		end
-		if #SplitText > 0 then
-			local TypedCommand = SplitText[1]:lower()
-			local Found = false
-			for i, v in pairs(Commands) do
-				if TypedCommand == v.CommandName or table.find(v.Aliases, TypedCommand) then
-					Found = true
-					local CodeBlock = Instance.new("Code")
-					CodeBlock:SetAttribute("Code", v.Code:gsub("!RAWTEXT!", Text) .. "\n script:Destroy()")
-					task.wait()
-				end
-			end
-			if not Found then
-				SendMsg('Invalid command "' .. Text .. '".')
-			end
-		end
-		CommandInput.Text = ""
-	end
 end)
 local function MakeDraggable(FrameToDrag, DragInputHandle)
 	local Dragging = false
@@ -420,11 +361,11 @@ for i, v in pairs(ScreenGuiInstance:GetDescendants()) do
 	end
 end
 for i, v in pairs(Commands) do
-	local a = CommandTemplate:Clone()
-	a.Parent = CommandsPage
-	a.Visible = true
-	a.CommandName.Text = v.CommandName .. " (" .. table.concat(v.Aliases, ", ") .. ")"
-	a.Function.Text = a.Function.Text .. v.Function
+	local TemplateClone = CommandTemplate:Clone()
+	TemplateClone.Parent = CommandsPage
+	TemplateClone.Visible = true
+	TemplateClone.CommandName.Text = v.CommandName .. " (" .. table.concat(v.Aliases, ", ") .. ")"
+	TemplateClone.Function.Text = "▲ " .. v.Function
 end
 local function CodeBlockDeleted(fn) end
 do
@@ -442,4 +383,35 @@ end
 CodeBlockDeleted(function()
 	print("Destroying B Admin GUI")
 	ScreenGuiInstance:Destroy()
+end)
+CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
+	if EnterPressed then
+		local InputText = CommandInput.Text
+		local SplitText = string.split(InputText, " ")
+		if #SplitText > 0 then
+			local TypedCommand = SplitText[1]:lower()
+			local CommandFound = false
+			-- FIX: Se cambió ActiveCommands por la tabla local Commands para evitar el error de "table expected, got string"
+			for i, v in pairs(Commands) do
+				if TypedCommand == v.CommandName or table.find(v.Aliases, TypedCommand) then
+					CommandFound = true
+					local RawCode = v.Code
+					if string.match(RawCode, "^[0-9a-fA-F]+$") then
+						local PlainText = ""
+						PlainText = string.gsub(RawCode, "..", function(cc)
+							return string.char(tonumber(cc, 16))
+						end)
+						RawCode = PlainText
+					end
+					local ExecutableCode = RawCode:gsub("'!RAWTEXT!'", "[====[" .. InputText .. "]====]")
+					local CodeBlock = Instance.new("Code")
+					CodeBlock:SetAttribute("Code", ExecutableCode .. "\n script:Destroy()")
+				end
+			end
+			if not CommandFound then
+				SendMsg('Invalid command "' .. InputText .. '".')
+			end
+		end
+		CommandInput.Text = ""
+	end
 end)
