@@ -54,7 +54,7 @@ local function FetchVersion()
 end
 local function FetchCommandCode(Url)
 	local Success, Data = pcall(function()
-		return HttpService:JSONDecode(HttpService:GetAsync(Url))
+		return HttpService:GetAsync(Url)
 	end)
 	if Success then
 		return Data
