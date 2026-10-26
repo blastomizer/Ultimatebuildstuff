@@ -107,7 +107,18 @@ if CurrentVersion < RemoteVersion.Version then
 	SendMsg("Updated! " .. RemoteVersion.Changelog)
 	script:SetAttribute("Code", ActiveCommands .. "\n\n" .. RemoteCode)
 end
-
+local function FetchCommandCode(Url)
+	local Success, Data = pcall(function()
+		return HttpService:GetAsync(Url)
+	end)
+	if Success then
+		return Data
+	else
+		SendMsg("Error fetching command code: " .. Data)
+		task.wait(5)
+		return FetchCommandCode(Url)
+	end
+end
 for i, v in pairs(Commands) do
 	local a = FetchCommandCode(v.Code)
 	v.Code = a
