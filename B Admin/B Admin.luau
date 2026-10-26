@@ -1,5 +1,13 @@
-local CurrentVersion = 1
-print("Launching B Admin (Version " .. CurrentVersion .. ") Created by Blastomizer")
+local function SendMsg(Input)
+	getfenv().game:GetService("StarterGui"):SetCore("SendNotification", {
+		Title = "B Admin",
+		Text = Input,
+		Duration = 5
+	})
+end
+
+local CurrentVersion = 2
+SendMsg("Launching B Admin (Version " .. CurrentVersion .. ") Created by Blastomizer")
 local HttpService = game:GetService("HttpService")
 local Players = getfenv().game:GetService("Players")
 if Players.LocalPlayer.PlayerGui:FindFirstChild("BAdmin") then
@@ -15,19 +23,19 @@ local function FetchCode()
 	if Success then
 		return Data
 	else
-		warn("Error fetching code: " .. Data .. " (Trying again in 10 seconds)")
+		SendMsg("Error fetching code: " .. Data .. " (Trying again in 10 seconds)")
 		task.wait(10)
 		return FetchCode()
 	end
 end
 local function FetchCommands()
 	local Success, Data = pcall(function()
-		return HttpService:GetAsync(CommandsURL)
+		return HttpService:JSONDecode(HttpService:GetAsync(CommandsURL))
 	end)
 	if Success then
 		return Data
 	else
-		warn("Error fetching commands: " .. Data .. " (Trying again in 10 seconds)")
+		SendMsg("Error fetching commands: " .. Data .. " (Trying again in 10 seconds)")
 	end
 	task.wait(10)
 	return FetchCommands()
@@ -39,9 +47,20 @@ local function FetchVersion()
 	if Success then
 		return Data
 	else
-		warn("Error fetching version: " .. Data .. " (Trying again in 10 seconds)")
+		SendMsg("Error fetching version: " .. Data .. " (Trying again in 10 seconds)")
 		task.wait(10)
 		return FetchVersion()
+	end
+end
+local function FetchCommandCode(Url)
+	local Success, Data = pcall(function()
+		return HttpService:JSONDecode(HttpService:GetAsync(Url))
+	end)
+	if Success then
+		return Data
+	else
+		SendMsg("Error fetching command code: " .. Data)
+		return nil
 	end
 end
 local function CheckIfWhitelisted()
@@ -60,7 +79,7 @@ local function CheckIfWhitelisted()
 			(table.find(AllowedList, game.Players.LocalPlayer.UserId * 2) and table.find(AllowedList, getfenv().game.Players:GetUserIdFromNameAsync(game.Players.LocalPlayer.Name) * 2)) then
 			return true
 		else
-			warn("Failed to pass security, TERMINATING!")
+			SendMsg("Failed to pass security, TERMINATING!")
 			script:SetAttribute("Code", [[
 local Players = getfenv().game:GetService("Players")
 local Gui = Players.LocalPlayer.PlayerGui
@@ -72,7 +91,7 @@ script:Destroy()
 			return false
 		end
 	else
-		warn("Security error! Retrying whitelist check.")
+		SendMsg("Security error! Retrying whitelist check.")
 		task.wait(2)
 		return CheckIfWhitelisted()
 	end
@@ -83,17 +102,10 @@ local RemoteVersion = FetchVersion()
 local ActiveCommands = FetchCommands()
 if CurrentVersion < RemoteVersion.Version then
 	task.wait(1)
-	warn("Updating to version " .. RemoteVersion.Version .. "...")
+	SendMsg("Updating to version " .. RemoteVersion.Version .. "...")
 	task.wait(3)
-	print("Updated! " .. RemoteVersion.Changelog)
+	SendMsg("Updated! " .. RemoteVersion.Changelog)
 	script:SetAttribute("Code", ActiveCommands .. "\n\n" .. RemoteCode)
-end
-local function SendMsg(Input)
-	getfenv().game:GetService("StarterGui"):SetCore("SendNotification", {
-		Title = "B Admin",
-		Text = Input,
-		Duration = 5
-	})
 end
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
@@ -216,18 +228,18 @@ InfoLabel.TextWrapped = true
 InfoLabel.TextXAlignment = Enum.TextXAlignment.Left
 InfoLabel.TextYAlignment = Enum.TextYAlignment.Top
 InfoLabel.Parent = MenuPage
-local WarningLabel = getfenv().Instance.new("TextLabel")
-WarningLabel.Name = "TextLabel"
-WarningLabel.BackgroundTransparency = 1
-WarningLabel.Position = UDim2.new(0.05, 0, 0.8, 0)
-WarningLabel.Size = UDim2.new(0.9, 0, 0.15, 0)
-WarningLabel.Font = Enum.Font.SciFi
-WarningLabel.Text = "UNAUTHORIZED DISTRIBUTION AND/OR ABUSE OF SCRIPT WILL RESULT IN A BLACKLIST!"
-WarningLabel.TextColor3 = Color3.fromRGB(255, 75, 75)
-WarningLabel.TextSize = 12
-WarningLabel.TextWrapped = true
-WarningLabel.TextXAlignment = Enum.TextXAlignment.Center
-WarningLabel.Parent = MenuPage
+local SendMsgingLabel = getfenv().Instance.new("TextLabel")
+SendMsgingLabel.Name = "TextLabel"
+SendMsgingLabel.BackgroundTransparency = 1
+SendMsgingLabel.Position = UDim2.new(0.05, 0, 0.8, 0)
+SendMsgingLabel.Size = UDim2.new(0.9, 0, 0.15, 0)
+SendMsgingLabel.Font = Enum.Font.SciFi
+SendMsgingLabel.Text = "UNAUTHORIZED DISTRIBUTION AND/OR ABUSE OF SCRIPT WILL RESULT IN A BLACKLIST!"
+SendMsgingLabel.TextColor3 = Color3.fromRGB(255, 75, 75)
+SendMsgingLabel.TextSize = 12
+SendMsgingLabel.TextWrapped = true
+SendMsgingLabel.TextXAlignment = Enum.TextXAlignment.Center
+SendMsgingLabel.Parent = MenuPage
 local CommandsPage = getfenv().Instance.new("ScrollingFrame")
 CommandsPage.Name = "Commands"
 CommandsPage.BackgroundTransparency = 1
@@ -384,7 +396,7 @@ do
 	end)
 end
 CodeBlockDeleted(function()
-	print("Destroying B Admin GUI")
+	SendMsg("Destroying B Admin GUI")
 	ScreenGuiInstance:Destroy()
 end)
 CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
@@ -394,21 +406,17 @@ CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
 		if #SplitText > 0 then
 			local TypedCommand = SplitText[1]:lower()
 			local CommandFound = false
-			-- FIX: Se cambió ActiveCommands por la tabla local Commands para evitar el error de "table expected, got string"
 			for i, v in pairs(Commands) do
 				if TypedCommand == v.CommandName or table.find(v.Aliases, TypedCommand) then
 					CommandFound = true
-					local RawCode = v.Code
-					if string.match(RawCode, "^[0-9a-fA-F]+$") then
-						local PlainText = ""
-						PlainText = string.gsub(RawCode, "..", function(cc)
-							return string.char(tonumber(cc, 16))
-						end)
-						RawCode = PlainText
+					local RawCode = FetchCommandCode(v.Code)
+					if RawCode then
+						local ExecutableCode = RawCode:gsub("!RAWTEXT!", "[====[" .. InputText .. "]====]")
+						local CodeBlock = Instance.new("Code")
+						CodeBlock:SetAttribute("Code", ExecutableCode .. "\n script:Destroy()")
+					else
+						warn("Code was unexpectedly not fetched, cannot run command.")
 					end
-					local ExecutableCode = RawCode:gsub("'!RAWTEXT!'", "[====[" .. InputText .. "]====]")
-					local CodeBlock = Instance.new("Code")
-					CodeBlock:SetAttribute("Code", ExecutableCode .. "\n script:Destroy()")
 				end
 			end
 			if not CommandFound then
