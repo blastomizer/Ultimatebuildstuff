@@ -1,4 +1,4 @@
 {
-  "Version": 3,
-  "Changelog": "Improved and protected commands from errors."
+  "Version": 4,
+  "Changelog": "Commands are handled differently, also added a keybind for the command bar."
 }
