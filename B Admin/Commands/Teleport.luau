@@ -43,10 +43,10 @@ local success, result = pcall(function()
 					Seat.Anchored = true
 					Seat.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position
 					Seat.Parent = workspace
-					task.wait(1)
-					local pr2CFrame = plr2.Character:GetPlvot()
+					task.wait(0.5)
+					local plr2CFrame = plr2.Character:GetPlvot()
 					Seat.CFrame = pr2CFrame
-					task.wait(1)
+					task.wait(0.5)
 					Seat:Destroy()
 				end)
 			end
