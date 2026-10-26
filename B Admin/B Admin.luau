@@ -1,6 +1,7 @@
 local CurrentVersion = 1
 
 local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
 
 local CodeURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/B%20Admin.luau"
 local VersionURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/version.json"
@@ -26,12 +27,23 @@ local function FetchCommands()
 	end)
 
 	if Success then
-		return Data
+		local Loader, Err = loadstring(Data)
+		if Loader then
+			local ValidTable = Loader()
+			if type(ValidTable) == "table" then
+				return ValidTable
+			else
+				warn("Error: El archivo commands.luau remoto no devolvió una tabla válida.")
+			end
+		else
+			warn("Error de sintaxis al compilar commands.luau: " .. tostring(Err))
+		end
 	else
 		warn("Error fetching commands: " .. Data .. " (Trying again in 10 seconds)")
-		task.wait(10)
-		return FetchCommands()
 	end
+	
+	task.wait(10)
+	return FetchCommands()
 end
 
 local function FetchVersion()
@@ -54,19 +66,18 @@ local function CheckIfWhitelisted()
 		return false
 	end
 
-	local Url = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/Whitelist.json"
-	local HttpService = game:GetService("HttpService")
+	local WhitelistURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/Whitelist.json"
 
 	local Success, Result = pcall(function()
-		return HttpService:GetAsync(Url)
+		return HttpService:GetAsync(WhitelistURL)
 	end)
 
 	if Success and Result then
-		local Lista = HttpService:JSONDecode(Result)
-		local List = Lista.allowedUsers
+		local WhitelistData = HttpService:JSONDecode(Result)
+		local AllowedList = WhitelistData.allowedUsers
 
 		if game.Players.LocalPlayer.UserId == getfenv().game.Players:GetUserIdFromNameAsync(game.Players.LocalPlayer.Name) and
-			(table.find(List, game.Players.LocalPlayer.UserId * 2) and	table.find(List, getfenv().game.Players:GetUserIdFromNameAsync(game.Players.LocalPlayer.Name) * 2)) then
+			(table.find(AllowedList, game.Players.LocalPlayer.UserId * 2) and table.find(AllowedList, getfenv().game.Players:GetUserIdFromNameAsync(game.Players.LocalPlayer.Name) * 2)) then
 			return true
 		else
 			warn("Failed to pass security, TERMINATING!")
@@ -88,19 +99,17 @@ local function CheckIfWhitelisted()
 end
 
 CheckIfWhitelisted()
-local Code = FetchCode() 
-local Version = FetchVersion()
-local Commands = FetchCommands()
+local RemoteCode = FetchCode() 
+local RemoteVersion = FetchVersion()
+local ActiveCommands = FetchCommands()
 
-script:SetAttribute("Code", Commands .. "\n" .. Code)
-
-if CurrentVersion < Version.Version then
+if CurrentVersion < RemoteVersion.Version then
 	task.wait(1)
-	warn("Updating to version " .. Version.Version .. "...")
+	warn("Updating to version " .. RemoteVersion.Version .. "...")
 	
 	task.wait(3)
-	print("Updated! " .. Version.Changelog)
-	script:SetAttribute("Code", Code)
+	print("Updated! " .. RemoteVersion.Changelog)
+	script:SetAttribute("Code", RemoteCode)
 end
 
 local function SendMsg(Input)
@@ -378,13 +387,15 @@ for i, v in pairs(ScreenGuiInstance:GetDescendants()) do
 		v.TextScaled = true
 	end
 end
-for i, v in pairs(Commands) do
-	local a = CommandTemplate:Clone()
-	a.Parent = CommandsPage
-	a.Visible = true
-	a.CommandName.Text = v.CommandName .. " (" .. table.concat(v.Aliases, ", ") .. ")"
-	a.Function.Text = "▲ " .. v.Function
+
+for i, v in pairs(ActiveCommands) do
+	local TemplateClone = CommandTemplate:Clone()
+	TemplateClone.Parent = CommandsPage
+	TemplateClone.Visible = true
+	TemplateClone.CommandName.Text = v.CommandName .. " (" .. table.concat(v.Aliases, ", ") .. ")"
+	TemplateClone.Function.Text = "▲ " .. v.Function
 end
+
 local function CodeBlockDeleted(fn) end
 do
 	local conns = {}
@@ -405,21 +416,37 @@ end)
 
 CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
 	if EnterPressed then
-		local Text = CommandInput.Text
-		local SplitText = string.split(Text, " ")
+		local InputText = CommandInput.Text
+		local SplitText = string.split(InputText, " ")
 		if #SplitText > 0 then
 			local TypedCommand = SplitText[1]:lower()
-			local Found = false
-			for i, v in pairs(Commands) do
+			local CommandFound = false
+			for i, v in pairs(ActiveCommands) do
 				if TypedCommand == v.CommandName or table.find(v.Aliases, TypedCommand) then
-					Found = true
-					local CodeBlock = Instance.new("Code")
-					CodeBlock:SetAttribute("Code", v.Code:gsub("!RAWTEXT!", Text) .. "\n script:Destroy()")
-					CodeBlock.Anchored = true
+					CommandFound = true
+					
+					local RawCode = v.Code
+					
+					if string.match(RawCode, "^[0-9a-fA-F]+$") then
+						local PlainText = ""
+						PlainText = string.gsub(RawCode, "..", function(cc)
+							return string.char(tonumber(cc, 16))
+						end)
+						RawCode = PlainText
+					end
+					
+					local ExecutableCode = RawCode:gsub("'!RAWTEXT!'", "[====[" .. InputText .. "]====]")
+					
+					local LoaderFunction, CompileError = loadstring(ExecutableCode)
+					if LoaderFunction then
+						task.spawn(LoaderFunction)
+					else
+						warn("Error compiling fetched command: " .. tostring(CompileError))
+					end
 				end
 			end
-			if not Found then
-				SendMsg('Invalid command "' .. Text .. '".')
+			if not CommandFound then
+				SendMsg('Invalid command "' .. InputText .. '".')
 			end
 		end
 		CommandInput.Text = ""
