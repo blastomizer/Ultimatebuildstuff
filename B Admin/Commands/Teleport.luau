@@ -35,20 +35,20 @@ local success, result = pcall(function()
 	local list2 = search(p2)
 	for _, plr1 in ipairs(list1) do
 		for _, plr2 in ipairs(list2) do
-			if plr1 and plr2 and plr1.Character and plr2.Character then
+			if plr1 and plr2 and plr1.Character:FindFirstChild("HumanoidRootPart") and plr1.Character:FindFirstChild("HumanoidRootPart") then
 				local pr1CFrame = plr1.Character:GetPivot()
 				local Seat = Instance.new("Seat")
 				Seat.Size = Vector3.new(2, 0.1, 2)
+				Seat.Transparency = 1
 				Seat.Anchored = true
-				Seat.CFrame = pr1CFrame
+				Seat.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position
 				Seat.Parent = workspace
 				task.wait(.2)
 				local pr2CFrame = plr2.Character:GetPlvot()
-				Seat.CFrame = pr2CFrame
+				Seat:PivotTo(pr2CFrame)
 				task.wait(.1)
 				Seat:Destroy()
 			end
 		end
 	end
 end)
-script:Destroy()
