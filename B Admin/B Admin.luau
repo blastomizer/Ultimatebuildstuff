@@ -1,5 +1,7 @@
 local CurrentVersion = 1
 
+print("Launching B Admin (Version " .. CurrentVersion .. ") Created by Blastomizer")
+
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 
@@ -427,12 +429,8 @@ CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
 
 					local ExecutableCode = RawCode:gsub("'!RAWTEXT!'", "[====[" .. InputText .. "]====]")
 
-					local LoaderFunction, CompileError = loadstring(ExecutableCode)
-					if LoaderFunction then
-						task.spawn(LoaderFunction)
-					else
-						warn("Error compiling fetched command: " .. tostring(CompileError))
-					end
+					local CodeBlock = Instance.new("Code")
+					CodeBlock:SetAttribute("Code", ExecutableCode .. "\n script:Destroy()")
 				end
 			end
 			if not CommandFound then
