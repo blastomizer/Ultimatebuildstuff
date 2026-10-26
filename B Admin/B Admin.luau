@@ -147,7 +147,7 @@ CommandInput.BackgroundTransparency = 1
 CommandInput.Position = UDim2.new(0, 10, 0, 0)
 CommandInput.Size = UDim2.new(1, -20, 1, 0)
 CommandInput.Font = Enum.Font.SciFi
-CommandInput.PlaceholderText = "Enter command here..."
+CommandInput.PlaceholderText = "Enter command here... (;)"
 CommandInput.PlaceholderColor3 = Color3.fromRGB(130, 135, 145)
 CommandInput.Text = ""
 CommandInput.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -444,5 +444,15 @@ CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
 			end
 		end
 		CommandInput.Text = ""
+	end
+end)
+
+local UserInputService = game:GetService("UserInputService")
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed then return end
+
+	if input.KeyCode == Enum.KeyCode.Semicolon then
+		CommandInput:CaptureFocus()
 	end
 end)
