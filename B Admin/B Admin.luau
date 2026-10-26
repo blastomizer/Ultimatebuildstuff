@@ -30,7 +30,7 @@ local function FetchCode()
 end
 local function FetchCommands()
 	local Success, Data = pcall(function()
-		return HttpService:JSONDecode(HttpService:GetAsync(CommandsURL))
+		return HttpService:GetAsync(CommandsURL)
 	end)
 	if Success then
 		return Data
