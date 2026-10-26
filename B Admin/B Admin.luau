@@ -1,7 +1,10 @@
 local CurrentVersion = 1
 print("Launching B Admin (Version " .. CurrentVersion .. ") Created by Blastomizer")
 local HttpService = game:GetService("HttpService")
-local Players = game:GetService("Players")
+local Players = getfenv().game:GetService("Players")
+if Players.LocalPlayer.PlayerGui:FindFirstChild("BAdmin") then
+	Players.LocalPlayer.PlayerGui:FindFirstChild("BAdmin"):Destroy()
+end
 local CodeURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/B%20Admin.luau"
 local VersionURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/version.json"
 local CommandsURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/commands.luau"
