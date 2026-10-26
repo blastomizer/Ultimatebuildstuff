@@ -1,4 +1,4 @@
 {
-  "Version": 1,
-  "Changelog": "Added Updating"
+  "Version": 2,
+  "Changelog": "Improved and protected commands from errors."
 }
