@@ -40,7 +40,6 @@ local success, result = pcall(function()
 					local plr1CFrame = plr1.Character:GetPivot()
 					local Seat = Instance.new("Seat")
 					Seat.Transparency = 1
-					Seat.Anchored = true
 					Seat.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position
 					Seat.Parent = workspace
 					task.wait(0.5)
