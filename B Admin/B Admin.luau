@@ -60,7 +60,8 @@ local function FetchCommandCode(Url)
 		return Data
 	else
 		SendMsg("Error fetching command code: " .. Data)
-		return nil
+		task.wait(2)
+		return FetchCommandCode(Url)
 	end
 end
 local function CheckIfWhitelisted()
