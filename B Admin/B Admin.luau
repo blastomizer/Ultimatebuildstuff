@@ -15,7 +15,7 @@ if Players.LocalPlayer.PlayerGui:FindFirstChild("BAdmin") then
 end
 local CodeURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/B%20Admin.luau"
 local VersionURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/version.json"
-local CommandsURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/commands.luau"
+local CommandsURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/commands.json"
 local function FetchCode()
 	local Success, Data = pcall(function()
 		return HttpService:GetAsync(CodeURL)
@@ -30,7 +30,7 @@ local function FetchCode()
 end
 local function FetchCommands()
 	local Success, Data = pcall(function()
-		return HttpService:GetAsync(CommandsURL)
+		return HttpService:JSONDecode(HttpService:GetAsync(CommandsURL))
 	end)
 	if Success then
 		return Data
@@ -59,8 +59,8 @@ local function FetchCommandCode(Url)
 	if Success then
 		return Data
 	else
-		SendMsg("Error fetching command code: " .. Data)
-		task.wait(2)
+		SendMsg("Error fetching command code: " .. Data .. " (Trying again in 5 seconds)")
+		task.wait(5)
 		return FetchCommandCode(Url)
 	end
 end
@@ -100,25 +100,12 @@ end
 CheckIfWhitelisted()
 local RemoteCode = FetchCode()
 local RemoteVersion = FetchVersion()
-local ActiveCommands = FetchCommands()
+local Commands = FetchCommands()
 if CurrentVersion < RemoteVersion.Version then
 	task.wait(1)
 	SendMsg("Updating to version " .. RemoteVersion.Version .. "...")
 	task.wait(3)
 	SendMsg("Updated! " .. RemoteVersion.Changelog)
-	script:SetAttribute("Code", ActiveCommands .. "\n\n" .. RemoteCode)
-end
-local function FetchCommandCode(Url)
-	local Success, Data = pcall(function()
-		return HttpService:GetAsync(Url)
-	end)
-	if Success then
-		return Data
-	else
-		SendMsg("Error fetching command code: " .. Data)
-		task.wait(5)
-		return FetchCommandCode(Url)
-	end
 end
 for i, v in pairs(Commands) do
 	local a = FetchCommandCode(v.Code)
