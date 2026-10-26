@@ -6,7 +6,7 @@ local function SendMsg(Input)
 	})
 end
 
-local CurrentVersion = 3
+local CurrentVersion = 4
 SendMsg("Launching B Admin (Version " .. CurrentVersion .. ") Created by Blastomizer")
 local HttpService = game:GetService("HttpService")
 local Players = getfenv().game:GetService("Players")
@@ -147,7 +147,7 @@ CommandInput.BackgroundTransparency = 1
 CommandInput.Position = UDim2.new(0, 10, 0, 0)
 CommandInput.Size = UDim2.new(1, -20, 1, 0)
 CommandInput.Font = Enum.Font.SciFi
-CommandInput.PlaceholderText = "Enter command here... (;)"
+CommandInput.PlaceholderText = "Enter command here... ( ; )"
 CommandInput.PlaceholderColor3 = Color3.fromRGB(130, 135, 145)
 CommandInput.Text = ""
 CommandInput.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -454,5 +454,7 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
 
 	if input.KeyCode == Enum.KeyCode.Semicolon then
 		CommandInput:CaptureFocus()
+		task.wait(0.1)
+		CommandInput.Text = ""
 	end
 end)
