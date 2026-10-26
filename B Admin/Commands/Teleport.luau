@@ -37,7 +37,7 @@ local success, result = pcall(function()
 		for _, plr2 in ipairs(list2) do
 			if plr1 and plr2 and plr1.Character:FindFirstChild("HumanoidRootPart") and plr1.Character:FindFirstChild("HumanoidRootPart") then
 				task.spawn(function()
-					local pr1CFrame = plr1.Character:GetPivot()
+					local plr1CFrame = plr1.Character:GetPivot()
 					local Seat = Instance.new("Seat")
 					Seat.Transparency = 1
 					Seat.Anchored = true
