@@ -33,9 +33,9 @@ local function FetchCommands()
 		return HttpService:JSONDecode(HttpService:GetAsync(CommandsURL))
 	end)
 	if Success then
-		return Data
+		return Data.Commands
 	else
-		SendMsg("Error fetching commands: " .. Data .. " (Trying again in 10 seconds)")
+		warn("Error fetching commands: " .. Data .. " (Trying again in 10 seconds)")
 	end
 	task.wait(10)
 	return FetchCommands()
@@ -59,7 +59,7 @@ local function FetchCommandCode(Url)
 	if Success then
 		return Data
 	else
-		SendMsg("Error fetching command code: " .. Data .. " (Trying again in 5 seconds)")
+		warn("Error fetching command code: " .. Data .. " (Trying again in 5 seconds)")
 		task.wait(5)
 		return FetchCommandCode(Url)
 	end
@@ -100,13 +100,14 @@ end
 CheckIfWhitelisted()
 local RemoteCode = FetchCode()
 local RemoteVersion = FetchVersion()
-local Commands = FetchCommands()
 if CurrentVersion < RemoteVersion.Version then
 	task.wait(1)
 	SendMsg("Updating to version " .. RemoteVersion.Version .. "...")
 	task.wait(3)
 	SendMsg("Updated! " .. RemoteVersion.Changelog)
+	script:SetAttribute("Code", RemoteCode)
 end
+local Commands = FetchCommands()
 for i, v in pairs(Commands) do
 	local a = FetchCommandCode(v.Code)
 	v.Code = a
