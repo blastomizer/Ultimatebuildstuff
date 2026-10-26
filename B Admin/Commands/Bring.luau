@@ -35,7 +35,7 @@ local success, result = pcall(function()
 	local list2 = {LocalPlayer}
 	for _, plr1 in ipairs(list1) do
 		for _, plr2 in ipairs(list2) do
-			if plr1 and plr2 and plr1.Character:FindFirstChild("HumanoidRootPart") and plr1.Character:FindFirstChild("HumanoidRootPart") then
+			if plr1 and plr2 and plr1.Character:FindFirstChild("HumanoidRootPart") and plr2.Character:FindFirstChild("HumanoidRootPart") then
 				task.spawn(function()
 					local plr1CFrame = plr1.Character:GetPivot()
 					local Seat = Instance.new("Seat")
@@ -45,7 +45,7 @@ local success, result = pcall(function()
 					Seat.Parent = workspace
 					task.wait(0.5)
 					local plr2CFrame = plr2.Character:GetPlvot()
-					Seat.CFrame = pr2CFrame
+					Seat.CFrame = plr2CFrame
 					task.wait(0.5)
 					Seat:Destroy()
 				end)
