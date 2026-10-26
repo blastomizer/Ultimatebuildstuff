@@ -454,7 +454,7 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
 
 	if input.KeyCode == Enum.KeyCode.Semicolon then
 		CommandInput:CaptureFocus()
-		task.wait(0.1)
+		task.wait()
 		CommandInput.Text = ""
 	end
 end)
