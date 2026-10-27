@@ -36,7 +36,7 @@ local success, result = pcall(function()
 		end
 		return matches
 	end
-	print("choseplayer")
+	--print("choseplayer")
 	local list1 = search(p1)
 	local list2 = search(p2)
 	for _, plr1 in ipairs(list1) do
