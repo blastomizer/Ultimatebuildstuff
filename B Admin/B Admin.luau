@@ -194,9 +194,9 @@ UiGradient.Color = ColorSequence.new({
 })
 UiGradient.Rotation = -90
 UiGradient.Transparency = NumberSequence.new({
-	NumberSequenceKeypoint.new(0, 0.2),
-	NumberSequenceKeypoint.new(0.5, 0.4),
-	NumberSequenceKeypoint.new(1, 0.6)
+	NumberSequenceKeypoint.new(0, 0.3),
+	NumberSequenceKeypoint.new(0.5, 0.3),
+	NumberSequenceKeypoint.new(1, 0.4)
 })
 UiGradient.Parent = MainFrame
 local ContentFrame = getfenv().Instance.new("Frame")
@@ -365,6 +365,8 @@ ServerStatTemplate.TextColor3 = Color3.fromRGB(240, 240, 240)
 ServerStatTemplate.TextSize = 15
 ServerStatTemplate.TextXAlignment = Enum.TextXAlignment.Left
 ServerStatTemplate.Parent = CommandTemplate
+ServerStatTemplate.TextEditable = false
+ServerStatTemplate.ClearTextOnFocus = false
 ServerStatTemplate.Visible = false
 local CloseButton = getfenv().Instance.new("TextButton")
 CloseButton.Name = "Close"
