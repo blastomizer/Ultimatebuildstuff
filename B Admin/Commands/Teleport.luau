@@ -35,7 +35,7 @@ local success, result = pcall(function()
 		end
 		return matches
 	end
-	print("choseplayer")
+	--print("choseplayer")
 	local list1 = search(p1)
 	local list2 = search(p2)
 	for _, plr1 in ipairs(list1) do
@@ -45,15 +45,17 @@ local success, result = pcall(function()
 					--print("gotposition")
 					local plr1CFrame = plr1.Character:GetPivot()
 					local Seat = Instance.new("Seat")
+					task.wait(0.1)
 					Seat.Transparency = 1
 					Seat.Size = Vector3.new(5, 0.5, 5)
 					Seat.Anchored = true
+					task.wait(0.1)
 					Seat.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position
 					task.wait(0.25)
 					--print("teleported")
 					local plr2CFrame = plr2.Character:GetPivot()
 					Seat.CFrame = plr2CFrame
-					task.wait(0.1)
+					task.wait()
 					Seat:Destroy()
 					--print("seatbroke")
 				end)
