@@ -466,4 +466,4 @@ UserInputService.InputEnded:Connect(function(input, gameProcessed)
 	if input.KeyCode == Enum.KeyCode.Semicolon then
 		CommandInput:CaptureFocus()
 	end
-end)ioo
+end)
