@@ -53,3 +53,4 @@ local success, result = pcall(function()
 		end
 	end
 end)
+if not success then warn(tostring(result)) end
