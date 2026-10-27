@@ -3,7 +3,7 @@ local success, result = pcall(function()
 	local RawText = "!RAWTEXT!"
 	local Parameters = string.split(RawText, " ")
 	local p1 = Parameters[2]
-	local p2 = Paremeters[3]
+	local p2 = Parameters[3]
 	local Players = getfenv().game:GetService("Players")
 	local LocalPlayer = Players.LocalPlayer
 	local function search(input)
