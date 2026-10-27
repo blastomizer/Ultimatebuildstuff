@@ -34,7 +34,7 @@ local success, result = pcall(function()
 				if h then h.Parent = nil print("Your cursor has been hidden using Private Cursor by PainfullColour") end
 			end
 
-			if h then h.Parent = LocalPlayer warn("Cursor visible.") end
+			if h then h.Parent = LocalPlayer.PlayerScripts warn("Cursor visible.") end
 			getfenv().workspace.CurrentCamera.CameraSubject = plr1.Character.Humanoid
 		end
 	end
