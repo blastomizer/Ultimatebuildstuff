@@ -17,17 +17,21 @@ SendMsg("Launching B Admin (Version " .. CurrentVersion .. ") Created by Blastom
 local HttpService = game:GetService("HttpService")
 local Players = getfenv().game:GetService("Players")
 
--- cleanup
-if Players.LocalPlayer.PlayerGui:FindFirstChild("BAdmin") then
-	Players.LocalPlayer.PlayerGui:FindFirstChild("BAdmin"):Destroy()
-end
-for i, v in pairs(workspace:GetChildren()) do
-	if v.Name == "ServerInfo" and v:GetAttribute("Owner") == game.Players.LocalPlayer.UserId then
-		if v:GetAttribute("DisplayName") == "BADMIN_SERVERINFOBLOCK" then
-			v:Destroy()
+function cleanup()
+	-- cleanup
+	if Players.LocalPlayer.PlayerGui:FindFirstChild("BAdmin") then
+		Players.LocalPlayer.PlayerGui:FindFirstChild("BAdmin"):Destroy()
+	end
+	for i, v in pairs(workspace:GetChildren()) do
+		if v.Name == "ServerInfo" and v:GetAttribute("Owner") == game.Players.LocalPlayer.UserId then
+			if v:GetAttribute("DisplayName") == "BADMIN_SERVERINFOBLOCK" then
+				v:Destroy()
+			end
 		end
 	end
 end
+
+cleanup()
 
 local CodeURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/B%20Admin.luau"
 local VersionURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/version.json"
@@ -470,8 +474,8 @@ do
 	end)
 end
 CodeBlockDeleted(function()
-	SendMsg("Destroying B Admin GUI")
-	ScreenGuiInstance:Destroy()
+	SendMsg("Cleaning up...")
+	cleanup()
 end)
 
 local function h(str)
