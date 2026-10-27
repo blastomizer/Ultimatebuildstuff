@@ -542,10 +542,10 @@ local ServerStatIndexes =
 		"Version"
 	}
 
-SetServerStat("", "--------------------- <b>Client</b> ---------------------", true) task.wait(.1) --Not my best code
+SetServerStat("", ":--------------------- <b>Client</b> ---------------------", true) task.wait(.1) --Not my best code
 SetServerStat("", "FPS") task.wait(.1)
 SetServerStat("", "Ping") task.wait(.1)
-SetServerStat("", "--------------------- <b>Server</b> ---------------------", true) task.wait(.1)
+SetServerStat("", ":--------------------- <b>Server</b> ---------------------", true) task.wait(.1)
 SetServerStat("", "Name") task.wait(.1)
 SetServerStat("", "Region") task.wait(.1)
 SetServerStat("", "Age") task.wait(.1)
