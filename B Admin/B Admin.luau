@@ -9,8 +9,7 @@ local function SendMsg(Input)
 	sound.SoundId = "rbxassetid://106553517979212"
 	sound:Play()
 	sound.Name = "dfhguidfghdkg"
-	repeat task.wait() until sound.IsLoaded == true end
-	getfenv().game:GetService("Debris"):AddItem(sound, sound.TimeLength)
+	getfenv().game:GetService("Debris"):AddItem(sound, 3)
 end
 
 local CurrentVersion = 7
