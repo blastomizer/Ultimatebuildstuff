@@ -422,27 +422,31 @@ end
 
 CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
 	if EnterPressed then
-		local InputText = CommandInput.Text
-		local SplitText = string.split(InputText, " ")
-		if #SplitText > 0 then
-			local TypedCommand = SplitText[1]:lower()
-			local CommandFound = false
-			for i, v in pairs(Commands) do
-				if TypedCommand == v.CommandName or table.find(v.Aliases, TypedCommand) then
-					CommandFound = true
-					local RawCode = v.Code
-					if RawCode then
-						local ExecutableCode = v.Code:gsub("!RAWTEXT!", InputText)
-						local CodeBlock = Instance.new("Code")
-						CodeBlock:SetAttribute("Code", ExecutableCode .. "\n task.wait(5) script:Destroy()")
-					else
-						warn("Code was unexpectedly not fetched, cannot run command.")
+		local InputText = string.gsub(CommandInput.Text, "^%s+", "")
+		if InputText ~= "" then
+			local SplitText = string.split(InputText, " ")
+			if #SplitText > 0 then
+				local TypedCommand = SplitText[1]:lower()
+				local CommandFound = false
+					for i, v in pairs(Commands) do
+						if TypedCommand == v.CommandName or table.find(v.Aliases, TypedCommand) then
+							CommandFound = true
+							local RawCode = v.Code
+							if RawCode then
+								local ExecutableCode = v.Code:gsub("!RAWTEXT!", InputText)
+								local CodeBlock = Instance.new("Code")
+								CodeBlock:SetAttribute("Code", ExecutableCode .. "\n task.wait(5) script:Destroy()")
+							else
+								warn("Code was unexpectedly not fetched, cannot run command.")
+							end
+						end
 					end
+				if not CommandFound then
+					SendMsg('Invalid command "' .. InputText .. '".')
 				end
 			end
-			if not CommandFound then
-				SendMsg('Invalid command "' .. InputText .. '".')
-			end
+		else
+			SendMsg("Command bar is empty!")
 		end
 		CommandInput.Text = ""
 	end
