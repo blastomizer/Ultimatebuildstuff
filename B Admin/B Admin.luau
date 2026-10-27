@@ -7,6 +7,7 @@ local function SendMsg(Input)
 	local sound = getfenv().Instance.new("Sound")
 	sound.Parent = getfenv().game:GetService("Players").LocalPlayer.PlayerGui
 	sound.SoundId = "rbxassetid://106553517979212"
+	sound.Volume = 0.5
 	sound:Play()
 	sound.Name = "dfhguidfghdkg"
 	getfenv().game:GetService("Debris"):AddItem(sound, 3)
@@ -377,6 +378,7 @@ local function SetServerStat(Txt, Index)
 	if not ServerStatsPage:FindFirstChild(Index) then
 		Stat = ServerStatTemplate:Clone()
 		Stat.Name = Index
+		Stat.Visible = true
 	else
 		Stat = ServerStatsPage:FindFirstChild(Index)
 	end
