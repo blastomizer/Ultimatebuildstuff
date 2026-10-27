@@ -478,20 +478,6 @@ CodeBlockDeleted(function()
 	cleanup()
 end)
 
-local function h(str)
-	if str:sub(1, 2) == "#M" then
-		local hexData = str:sub(3)
-		local result = {}
-
-		for pair in hexData:gmatch("%x%x") do
-			table.insert(result, string.char(tonumber(pair, 16)))
-		end
-		return table.concat(result)
-	else
-		return str
-	end
-end
-
 CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
 	if EnterPressed then
 		local InputText = string.gsub(CommandInput.Text, "^%s+", "")
@@ -547,7 +533,6 @@ local ServerStatIndexes =
 SetServerStat("", "--------------------- <b>Client</b> ---------------------", true) task.wait(.1) --Not my best code
 SetServerStat("", "FPS") task.wait(.1)
 SetServerStat("", "Ping") task.wait(.1)
-SetServerStat("", " ")
 SetServerStat("", "--------------------- <b>Server</b> ---------------------", true) task.wait(.1)
 SetServerStat("", "Name") task.wait(.1)
 SetServerStat("", "Region") task.wait(.1)
