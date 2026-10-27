@@ -221,10 +221,12 @@ WelcomeLabel.BackgroundTransparency = 1
 WelcomeLabel.Position = UDim2.new(0.05, 0, 0.05, 0)
 WelcomeLabel.Size = UDim2.new(0.9, 0, 0.1, 0)
 WelcomeLabel.Font = Enum.Font.SciFi
-WelcomeLabel.Text = "Welcome, " .. LocalPlayer.Name
+WelcomeLabel.Text = "<b>Welcome, " .. LocalPlayer.Name .. "</b>"
+WelcomeLabel.TextScaled = true
+WelcomeLabel.RichText = true
 WelcomeLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 WelcomeLabel.TextSize = 18
-WelcomeLabel.TextXAlignment = Enum.TextXAlignment.Left
+WelcomeLabel.TextXAlignment = Enum.TextXAlignment.Center
 WelcomeLabel.Parent = MenuPage
 local InfoLabel = getfenv().Instance.new("TextLabel")
 InfoLabel.Name = "TextLabel"
@@ -318,9 +320,8 @@ LogoLabel.Activated:Connect(function()
 end)
 local PageNameLabel = getfenv().Instance.new("TextLabel")
 PageNameLabel.Name = "PageName"
-PageNameLabel.
-	BackgroundTransparency = 1
-PageNameLabel.Position = UDim2.new(0.15, 0, 0.15, 0)
+PageNameLabel.BackgroundTransparency = 1
+PageNameLabel.Position = UDim2.new(0.235, 0, 0.15, 0)
 PageNameLabel.Size = UDim2.new(0.7, 0, 0.7, 0)
 PageNameLabel.Font = Enum.Font.SciFi
 PageNameLabel.Text = "Commands"
