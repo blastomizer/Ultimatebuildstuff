@@ -8,6 +8,7 @@ local success, result = pcall(function()
 	local Parameters = string.split(RawText, " ")
 	local command = Parameters[1]
 	local p1 = Parameters[2]
+	
 	local function search(input)
 		if not input then return {} end
 		local query = string.lower(tostring(input))
@@ -70,4 +71,7 @@ local success, result = pcall(function()
 		end
 	end
 end)
-if not success then warn(tostring(result)) end
+
+if not success then 
+	warn(tostring(result)) 
+end
