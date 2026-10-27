@@ -1,15 +1,16 @@
 local function SendMsg(Input)
-	local sound = getfenv().Instance.new("Sound")
-	sound.Parent = getfenv().game:GetService("Players").LocalPlayer.PlayerGui
-	sound.SoundId = "rbxassetid://106553517979212"
-	sound:Play()
-	sound.Name = "dfhguidfghdkg"
-	getfenv().game:GetService("Debris"):AddItem(sound, sound.TimeLength)
 	getfenv().game:GetService("StarterGui"):SetCore("SendNotification", {
 		Title = "B Admin",
 		Text = Input,
 		Duration = 5
 	})
+	local sound = getfenv().Instance.new("Sound")
+	sound.Parent = getfenv().game:GetService("Players").LocalPlayer.PlayerGui
+	sound.SoundId = "rbxassetid://106553517979212"
+	sound:Play()
+	sound.Name = "dfhguidfghdkg"
+	repeat task.wait() until sound.IsLoaded == true end
+	getfenv().game:GetService("Debris"):AddItem(sound, sound.TimeLength)
 end
 
 local CurrentVersion = 7
