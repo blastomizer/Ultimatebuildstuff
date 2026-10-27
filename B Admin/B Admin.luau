@@ -515,10 +515,30 @@ CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
 	end
 end)
 
+local ServerStatIndexes = 
+	{
+		"Age",
+		"Average Fps",
+		"Server Fps",
+		"Average ping",
+		"Gravity",
+		"Is private server",
+		"Job Id",
+		"Lifetime parts",
+		"Max players",
+		"Memory",
+		"Parts",
+		"Player count",
+		"Players",
+		"Private server owner Id",
+		"Respawn time",
+		"Version"
+	}
+
 SetServerStat("", "-------- Client -------- :") task.wait(.1) --Not my best code
 SetServerStat("", "FPS") task.wait(.1)
 SetServerStat("", "Ping") task.wait(.1)
-
+SetServerStat("", " ")
 SetServerStat("", "-------- Server -------- :") task.wait(.1)
 SetServerStat("", "Name") task.wait(.1)
 SetServerStat("", "Region") task.wait(.1)
@@ -547,14 +567,6 @@ local function GetPing()
 	local DataPing = Stats.Network.ServerStatsItem["Data Ping"]:GetValue()
 	return math.round(DataPing * 10) / 10
 end
-
-SetServerStat("-------- Client -------- :", "") task.wait(.1)
-SetServerStat("", "FPS") task.wait(.1)
-SetServerStat("", "Ping") task.wait(.1)
-SetServerStat("-------- Server -------- :", "") task.wait(.1)
-SetServerStat("", "Name") task.wait(.1)
-SetServerStat("", "Region") task.wait(.1)
-SetServerStat("", "Ping") task.wait(.1)
 
 task.spawn(function()
 	SetServerStat("-------- Client -------- :", "") task.wait(.5)
