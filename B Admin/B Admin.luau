@@ -1,4 +1,9 @@
 local function SendMsg(Input)
+	local sound = getfenv().Instance.new("Sound")
+	sound.Parent = getfenv().game:GetService("SoundService")
+	sound.SoundId = "rbxassetid://106553517979212"
+	sound:Play()
+	getfenv().game:GetService("Debris"):AddItem(sound, sound.TimeLength)
 	getfenv().game:GetService("StarterGui"):SetCore("SendNotification", {
 		Title = "B Admin",
 		Text = Input,
@@ -6,7 +11,7 @@ local function SendMsg(Input)
 	})
 end
 
-local CurrentVersion = 6
+local CurrentVersion = 7
 SendMsg("Launching B Admin (Version " .. CurrentVersion .. ") Created by Blastomizer")
 local HttpService = game:GetService("HttpService")
 local Players = getfenv().game:GetService("Players")
@@ -240,7 +245,7 @@ SendMsgingLabel.BackgroundTransparency = 1
 SendMsgingLabel.Position = UDim2.new(0.05, 0, 0.8, 0)
 SendMsgingLabel.Size = UDim2.new(0.9, 0, 0.15, 0)
 SendMsgingLabel.Font = Enum.Font.SciFi
-SendMsgingLabel.Text = "UNAUTHORIZED DISTRIBUTION, COPYING AND/OR ABUSE OF SCRIPT OR IT'S SOURCE CODE WILL RESULT IN A BLACKLIST!"
+SendMsgingLabel.Text = "UNAUTHORIZED DISTRIBUTION, COPYING AND/OR ABUSE OF SCRIPT WILL RESULT IN A BLACKLIST!"
 SendMsgingLabel.TextColor3 = Color3.fromRGB(255, 75, 75)
 SendMsgingLabel.TextSize = 12
 SendMsgingLabel.TextWrapped = true
