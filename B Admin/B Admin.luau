@@ -625,7 +625,7 @@ task.spawn(function()
 				SetServerStat(GetServerStat("Player count") .. " / " .. GetServerStat("Max players"), "Players")
 			end
 		end
-		task.wait(10)
+		task.wait(5)
 	end
 end)
 
