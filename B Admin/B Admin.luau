@@ -633,7 +633,7 @@ end)
 
 task.spawn(function()
 	while true do
-		SetServerStat(getfenv().workspace.DistributedGameTime, "Age")
+		SetServerStat(math.round(getfenv().workspace.DistributedGameTime * 10) / 10, "Age")
 		task.wait(.1)
 	end
 end)
