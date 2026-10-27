@@ -1,6 +1,6 @@
 local function SendMsg(Input)
 	local sound = getfenv().Instance.new("Sound")
-	sound.Parent = getfenv().workspace
+	sound.Parent = getfenv().game:GetService("Players").LocalPlayer.PlayerGui
 	sound.SoundId = "rbxassetid://106553517979212"
 	sound:Play()
 	sound.Name = "dfhguidfghdkg"
@@ -434,19 +434,19 @@ CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
 			if #SplitText > 0 then
 				local TypedCommand = SplitText[1]:lower()
 				local CommandFound = false
-					for i, v in pairs(Commands) do
-						if TypedCommand == v.CommandName or table.find(v.Aliases, TypedCommand) then
-							CommandFound = true
-							local RawCode = v.Code
-							if RawCode then
-								local ExecutableCode = v.Code:gsub("!RAWTEXT!", InputText)
-								local CodeBlock = Instance.new("Code")
-								CodeBlock:SetAttribute("Code", ExecutableCode .. "\n task.wait(5) script:Destroy()")
-							else
-								warn("Code was unexpectedly not fetched, cannot run command.")
-							end
+				for i, v in pairs(Commands) do
+					if TypedCommand == v.CommandName or table.find(v.Aliases, TypedCommand) then
+						CommandFound = true
+						local RawCode = v.Code
+						if RawCode then
+							local ExecutableCode = v.Code:gsub("!RAWTEXT!", InputText)
+							local CodeBlock = Instance.new("Code")
+							CodeBlock:SetAttribute("Code", ExecutableCode .. "\n task.wait(5) script:Destroy()")
+						else
+							warn("Code was unexpectedly not fetched, cannot run command.")
 						end
 					end
+				end
 				if not CommandFound then
 					SendMsg('Invalid command "' .. InputText .. '".')
 				end
