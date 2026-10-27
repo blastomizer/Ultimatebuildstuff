@@ -12,7 +12,7 @@ local function SendMsg(Input)
 	getfenv().game:GetService("Debris"):AddItem(sound, 3)
 end
 
-local CurrentVersion = 8
+local CurrentVersion = 9
 SendMsg("Launching B Admin (Version " .. CurrentVersion .. ") Created by Blastomizer")
 local HttpService = game:GetService("HttpService")
 local Players = getfenv().game:GetService("Players")
@@ -331,6 +331,27 @@ PageNameLabel.TextXAlignment = Enum.TextXAlignment.Center
 PageNameLabel.Parent = DragBar
 UiPageLayout:GetPropertyChangedSignal("CurrentPage"):Connect(function() PageNameLabel.Text = "<b>" .. UiPageLayout.CurrentPage.Name .. "</b>" end)
 PageNameLabel.RichText = true
+local ServerStatsPage = getfenv().Instance.new("ScrollingFrame")
+ServerStatsPage.Name = "ServerStats"
+ServerStatsPage.BackgroundTransparency = 1
+ServerStatsPage.Size = UDim2.new(1, 0, 1, 0)
+ServerStatsPage.CanvasSize = UDim2.new(0, 0, 0, 0)
+ServerStatsPage.AutomaticCanvasSize = Enum.AutomaticSize.Y
+ServerStatsPage.ScrollBarThickness = 4
+ServerStatsPage.ScrollBarImageColor3 = Color3.fromRGB(100, 105, 115)
+ServerStatsPage.LayoutOrder = 2
+ServerStatsPage.Parent = ContentFrame
+local ServerStatTemplate = getfenv().Instance.new("TextBox")
+ServerStatTemplate.Name = "ServerStatTemplate"
+ServerStatTemplate.BackgroundTransparency = 1
+ServerStatTemplate.Position = UDim2.new(0.03, 0, 0, 2)
+ServerStatTemplate.Size = UDim2.new(0.94, 0, 0.45, 0)
+ServerStatTemplate.Font = Enum.Font.SciFi
+ServerStatTemplate.TextColor3 = Color3.fromRGB(240, 240, 240)
+ServerStatTemplate.TextSize = 15
+ServerStatTemplate.TextXAlignment = Enum.TextXAlignment.Left
+ServerStatTemplate.Parent = CommandTemplate
+ServerStatTemplate.Visible = false
 local CloseButton = getfenv().Instance.new("TextButton")
 CloseButton.Name = "Close"
 CloseButton.BackgroundTransparency = 1
@@ -349,6 +370,21 @@ ScreenGuiInstance.Parent = PlayerGui
 CloseButton.MouseButton1Click:Connect(function()
 	MainFrame.Visible = false
 end)
+
+local function SetServerStat(Txt, Index)
+	local Stat = nil
+	
+	if not ServerStatsPage:FindFirstChild(Index) then
+		Stat = ServerStatTemplate:Clone()
+		Stat.Name = Index
+	else
+		Stat = ServerStatsPage:FindFirstChild(Index)
+	end
+	
+	Stat.Text = Index .. ": " .. tostring(Txt)
+	Stat = nil
+end
+
 local function MakeDraggable(FrameToDrag, DragInputHandle)
 	local Dragging = false
 	local DragInputInstance = nil
@@ -460,6 +496,84 @@ CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
 		CommandInput.Text = ""
 	end
 end)
+
+local ServerStatIndexes = 
+	{
+		"Age",
+		"Average Fps",
+		"Server Fps",
+		"Average ping",
+		"Gravity",
+		"Is private server",
+		"Job Id",
+		"Lifetime parts",
+		"Max players",
+		"Memory",
+		"Parts",
+		"Player count",
+		"Players",
+		"Private server owner Id",
+		"Respawn time",
+		"Version"
+	}
+
+local RunService = getfenv().game:GetService("RunService")
+local Stats = getfenv().game:GetService("Stats")
+
+local function GetPing()
+	local DataPing = Stats.Network.ServerStatsItem["Data Ping"]:GetValue()
+	return math.round(DataPing * 10) / 10
+end
+
+task.spawn(function()
+	SetServerStat("---- Client ---- :", "") task.wait(.1)
+	while true do
+		local DeltaTime = RunService.RenderStepped:Wait()
+		local CurrentFps = 1 / DeltaTime
+		SetServerStat(math.round(CurrentFps * 10) / 10, "FPS") task.wait(.1)
+		SetServerStat(GetPing(), "Ping") task.wait(.1)
+		SetServerStat("---- Server ---- :", "") task.wait(.1)
+		task.wait(10)
+	end
+end)
+
+local function GetServerRegion()
+	local Success, Data = pcall(function()
+		return HttpService:JSONDecode(HttpService:GetAsync("http://ip-api.com/json/")) -- Since HTTP requests are server-side, this will get the server's region
+	end)
+	if Success then
+		return Data.country
+	else
+		SendMsg("Error fetching server region: " .. Data .. " (Trying again in 10 seconds)")
+		task.wait(10)
+		return GetServerRegion()
+	end
+end
+
+SetServerStat(getfenv().workspace:GetAttribute("serverName"), "Name") task.wait(.1)
+SetServerStat(GetServerRegion(), "Region") task.wait(.1)
+
+local function GetServerStat(v)
+	local h = Instance.new("ServerInfo")
+	h:SetAttribute("Index", v)
+	task.wait(.1)
+	local Output = h:GetAttribute("Output")
+	h:Destroy()
+	
+	if typeof(Output) == "number" then 
+		Output = math.round(Output * 10) / 10
+	end
+	return Output
+end
+
+task.spawn(function()
+	while true do
+		for i, v in pairs(ServerStatIndexes) do
+			SetServerStat(GetServerStat(v), v)
+		end
+	end
+end)
+
 
 local UserInputService = game:GetService("UserInputService")
 
