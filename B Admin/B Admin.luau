@@ -588,7 +588,7 @@ local function GetServerRegion()
 		return HttpService:JSONDecode(HttpService:GetAsync("http://ip-api.com/json/")) -- Since HTTP requests are server-side, this will get the server's region
 	end)
 	if Success then
-		return Data.country
+		return Data.regionName .. ", " .. Data.country
 	else
 		SendMsg("Error fetching server region: " .. Data .. " (Trying again in 10 seconds)")
 		task.wait(10)
