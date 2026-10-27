@@ -1,6 +1,6 @@
 local function a()local b=game:GetService("HttpService")local c=script:GetAttribute("Code")if c=="" then return false end;local c="https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/Whitelist.json";local c,d=pcall(function()return b:GetAsync(c)end)if c and d then local a=b:JSONDecode(d)local a=a.allowedUsers;if getfenv().game.Players.LocalPlayer.UserId==getfenv().game.Players:GetUserIdFromNameAsync(game.Players.LocalPlayer.Name)and(table.find(a,getfenv().game.Players.LocalPlayer.UserId*2)and table.find(a,getfenv().game.Players:GetUserIdFromNameAsync(game.Players.LocalPlayer.Name)*2))then return true else getfenv().game.Players.LocalPlayer:Kick("Unwhitelisted client tried to run command.");return false end else warn("Security error! Retrying whitelist check.")task.wait(2)return a()end end;a()
 local success, result = pcall(function()
-	local h = getfenv().game:GetService("Players").LocalPlayer.MouseCursorClient
+	local h = getfenv().game:GetService("Players").LocalPlayer.PlayerScripts.MouseCursorClient
 	
 	local Players = getfenv().game:GetService("Players")
 	local LocalPlayer = Players.LocalPlayer
@@ -33,7 +33,7 @@ local success, result = pcall(function()
 				print("Currently spectating " .. plr1.Name .. ". (Spectate yourself to exit; your cursor has been hidden)")
 				if h then h.Parent = nil end
 			else
-				if h then h.Parent = LocalPlayer end
+				if h then h.Parent = LocalPlayer.PlayerScripts end
 				warn("Cursor visible")
 			end
 
