@@ -548,7 +548,6 @@ SetServerStat("", "Ping") task.wait(.1)
 SetServerStat("", "--------------------- <b>Server</b> ---------------------", true) task.wait(.1)
 SetServerStat("", "Name") task.wait(.1)
 SetServerStat("", "Region") task.wait(.1)
-SetServerStat("", "Ping") task.wait(.1)
 SetServerStat("", "Age") task.wait(.1)
 SetServerStat("", "Average Fps") task.wait(.1)
 SetServerStat("", "Server Fps") task.wait(.1)
@@ -571,7 +570,7 @@ local Stats = getfenv().game:GetService("Stats")
 
 local function GetPing()
 	local DataPing = LocalPlayer:GetNetworkPing()
-	return math.round(DataPing * 2000 * 10) / 10 .. "ms"
+	return math.round(DataPing * 1000 * 10) / 10 .. "ms"
 end
 
 task.spawn(function()
