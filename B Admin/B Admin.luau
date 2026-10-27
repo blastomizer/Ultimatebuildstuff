@@ -7,7 +7,6 @@ local function SendMsg(Input)
 	local sound = getfenv().Instance.new("Sound")
 	sound.Parent = getfenv().game:GetService("Players").LocalPlayer.PlayerGui
 	sound.SoundId = "rbxassetid://106553517979212"
-	sound.Volume = 0.5
 	sound:Play()
 	sound.Name = "dfhguidfghdkg"
 	getfenv().game:GetService("Debris"):AddItem(sound, 3)
@@ -17,9 +16,19 @@ local CurrentVersion = 9
 SendMsg("Launching B Admin (Version " .. CurrentVersion .. ") Created by Blastomizer")
 local HttpService = game:GetService("HttpService")
 local Players = getfenv().game:GetService("Players")
+
+-- cleanup
 if Players.LocalPlayer.PlayerGui:FindFirstChild("BAdmin") then
 	Players.LocalPlayer.PlayerGui:FindFirstChild("BAdmin"):Destroy()
 end
+for i, v in pairs(workspace:GetChildren()) do
+	if v.Name == "ServerInfo" and v:GetAttribute("Owner") == game.Players.LocalPlayer.UserId then
+		if v:GetAttribute("DisplayName") == "BADMIN_SERVERINFOBLOCK" then
+			v:Destroy()
+		end
+	end
+end
+
 local CodeURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/B%20Admin.luau"
 local VersionURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/version.json"
 local CommandsURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/commands.json"
@@ -342,11 +351,15 @@ ServerStatsPage.ScrollBarThickness = 4
 ServerStatsPage.ScrollBarImageColor3 = Color3.fromRGB(100, 105, 115)
 ServerStatsPage.LayoutOrder = 2
 ServerStatsPage.Parent = ContentFrame
+local UiListLayoutStats = getfenv().Instance.new("UIListLayout")
+UiListLayoutStats.SortOrder = Enum.SortOrder.LayoutOrder
+UiListLayoutStats.Padding = UDim.new(0, 2)
+UiListLayoutStats.Parent = ServerStatsPage
 local ServerStatTemplate = getfenv().Instance.new("TextBox")
 ServerStatTemplate.Name = "ServerStatTemplate"
 ServerStatTemplate.BackgroundTransparency = 1
-ServerStatTemplate.Position = UDim2.new(0.03, 0, 0, 2)
-ServerStatTemplate.Size = UDim2.new(0.94, 0, 0.45, 0)
+ServerStatTemplate.Position = UDim2.new(0,0,0)
+ServerStatTemplate.Size = UDim2.new(1, 0, 0.05, 0)
 ServerStatTemplate.Font = Enum.Font.SciFi
 ServerStatTemplate.TextColor3 = Color3.fromRGB(240, 240, 240)
 ServerStatTemplate.TextSize = 15
@@ -378,6 +391,7 @@ local function SetServerStat(Txt, Index)
 	if not ServerStatsPage:FindFirstChild(Index) then
 		Stat = ServerStatTemplate:Clone()
 		Stat.Name = Index
+		Stat.Parent = ServerStatsPage
 		Stat.Visible = true
 	else
 		Stat = ServerStatsPage:FindFirstChild(Index)
@@ -555,13 +569,17 @@ end
 SetServerStat(getfenv().workspace:GetAttribute("serverName"), "Name") task.wait(.1)
 SetServerStat(GetServerRegion(), "Region") task.wait(.1)
 
+local ServerInfoBlock = Instance.new("ServerInfo")
+ServerInfoBlock.Anchored = true
+ServerInfoBlock.Position = Vector3.new(1000000, 34573, 1000000)
+ServerInfoBlock.Size = Vector3.one
+ServerInfoBlock:SetAttribute("DisplayName", "BADMIN_SERVERINFOBLOCK")
+
 local function GetServerStat(v)
-	local h = Instance.new("ServerInfo")
-	h:SetAttribute("Index", v)
-	task.wait(.1)
-	local Output = h:GetAttribute("Output")
-	h:Destroy()
-	
+	ServerInfoBlock:SetAttribute("Index", v)
+	task.wait(0.2)
+	local Output = ServerInfoBlock:GetAttribute("Output")
+
 	if typeof(Output) == "number" then 
 		Output = math.round(Output * 10) / 10
 	end
@@ -573,9 +591,9 @@ task.spawn(function()
 		for i, v in pairs(ServerStatIndexes) do
 			SetServerStat(GetServerStat(v), v)
 		end
+		task.wait(10)
 	end
 end)
-
 
 local UserInputService = game:GetService("UserInputService")
 
