@@ -330,6 +330,7 @@ PageNameLabel.TextSize = 20
 PageNameLabel.TextXAlignment = Enum.TextXAlignment.Center
 PageNameLabel.Parent = DragBar
 UiPageLayout:GetPropertyChangedSignal("CurrentPage"):Connect(function() PageNameLabel.Text = "<b>" .. UiPageLayout.CurrentPage.Name .. "</b>" end)
+PageNameLabel.RichText = true
 local CloseButton = getfenv().Instance.new("TextButton")
 CloseButton.Name = "Close"
 CloseButton.BackgroundTransparency = 1
