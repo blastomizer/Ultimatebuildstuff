@@ -526,7 +526,6 @@ end)
 
 local ServerStatIndexes = 
 	{
-		"Age",
 		"Average Fps",
 		"Server Fps",
 		"Average ping",
@@ -629,6 +628,13 @@ task.spawn(function()
 			end
 		end
 		task.wait(10)
+	end
+end)
+
+task.spawn(function()
+	while true do
+		SetServerStat(getfenv().workspace.DistributedGameTime, "Age")
+		task.wait(.1)
 	end
 end)
 
