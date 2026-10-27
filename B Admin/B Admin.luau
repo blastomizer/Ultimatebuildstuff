@@ -1,8 +1,9 @@
 local function SendMsg(Input)
 	local sound = getfenv().Instance.new("Sound")
-	sound.Parent = getfenv().game:GetService("SoundService")
+	sound.Parent = getfenv().workspace
 	sound.SoundId = "rbxassetid://106553517979212"
 	sound:Play()
+	sound.Name = "dfhguidfghdkg"
 	getfenv().game:GetService("Debris"):AddItem(sound, sound.TimeLength)
 	getfenv().game:GetService("StarterGui"):SetCore("SendNotification", {
 		Title = "B Admin",
@@ -465,4 +466,4 @@ UserInputService.InputEnded:Connect(function(input, gameProcessed)
 	if input.KeyCode == Enum.KeyCode.Semicolon then
 		CommandInput:CaptureFocus()
 	end
-end)
+end)ioo
