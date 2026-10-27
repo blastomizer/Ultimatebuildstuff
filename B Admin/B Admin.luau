@@ -12,7 +12,7 @@ local function SendMsg(Input)
 	getfenv().game:GetService("Debris"):AddItem(sound, 3)
 end
 
-local CurrentVersion = 7
+local CurrentVersion = 8
 SendMsg("Launching B Admin (Version " .. CurrentVersion .. ") Created by Blastomizer")
 local HttpService = game:GetService("HttpService")
 local Players = getfenv().game:GetService("Players")
@@ -329,7 +329,7 @@ PageNameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 PageNameLabel.TextSize = 20
 PageNameLabel.TextXAlignment = Enum.TextXAlignment.Center
 PageNameLabel.Parent = DragBar
-UiPageLayout:GetPropertyChangedSignal("CurrentPage"):Connect(function() PageNameLabel.Text = UiPageLayout.CurrentPage.Name end)
+UiPageLayout:GetPropertyChangedSignal("CurrentPage"):Connect(function() PageNameLabel.Text = "<b>" .. UiPageLayout.CurrentPage.Name .. "</b>" end)
 local CloseButton = getfenv().Instance.new("TextButton")
 CloseButton.Name = "Close"
 CloseButton.BackgroundTransparency = 1
