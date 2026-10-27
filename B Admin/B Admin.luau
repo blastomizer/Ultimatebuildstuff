@@ -6,7 +6,7 @@ local function SendMsg(Input)
 	})
 end
 
-local CurrentVersion = 4
+local CurrentVersion = 5
 SendMsg("Launching B Admin (Version " .. CurrentVersion .. ") Created by Blastomizer")
 local HttpService = game:GetService("HttpService")
 local Players = getfenv().game:GetService("Players")
@@ -433,7 +433,7 @@ CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
 					if RawCode then
 						local ExecutableCode = v.Code:gsub("!RAWTEXT!", InputText)
 						local CodeBlock = Instance.new("Code")
-						CodeBlock:SetAttribute("Code", ExecutableCode .. "\n script:Destroy()")
+						CodeBlock:SetAttribute("Code", ExecutableCode .. "\n task.wait(5) script:Destroy()")
 					else
 						warn("Code was unexpectedly not fetched, cannot run command.")
 					end
@@ -449,12 +449,10 @@ end)
 
 local UserInputService = game:GetService("UserInputService")
 
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
+UserInputService.InputEnded:Connect(function(input, gameProcessed)
 	if gameProcessed then return end
 
 	if input.KeyCode == Enum.KeyCode.Semicolon then
 		CommandInput:CaptureFocus()
-		task.wait()
-		CommandInput.Text = ""
 	end
 end)
