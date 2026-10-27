@@ -6,7 +6,7 @@ local function SendMsg(Input)
 	})
 end
 
-local CurrentVersion = 6
+local CurrentVersion = 6.1
 SendMsg("Launching B Admin (Version " .. CurrentVersion .. ") Created by Blastomizer")
 local HttpService = game:GetService("HttpService")
 local Players = getfenv().game:GetService("Players")
