@@ -23,6 +23,12 @@
       "Aliases": ["goto"],
       "Code": "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/Commands/To.luau",
       "Function": "to <player>"
+    },
+    {
+      "CommandName": "spectate",
+      "Aliases": ["spec", "view", "cam"],
+      "Code": "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/Commands/Spectate.luau",
+      "Function": "spectate <player>"
     }
   ]
 }
