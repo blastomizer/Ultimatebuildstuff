@@ -542,13 +542,12 @@ local function GetPing()
 end
 
 task.spawn(function()
-	SetServerStat("---- Client ---- :", "") task.wait(.5)
+	SetServerStat("-------- Client -------- :", "") task.wait(.5)
 	while true do
 		local DeltaTime = RunService.RenderStepped:Wait()
 		local CurrentFps = 1 / DeltaTime
 		SetServerStat(math.round(CurrentFps * 10) / 10, "FPS") task.wait(.1)
 		SetServerStat(GetPing(), "Ping") task.wait(.5)
-		SetServerStat("---- Server ---- :", "") task.wait(.1)
 		task.wait(10)
 	end
 end)
@@ -565,6 +564,8 @@ local function GetServerRegion()
 		return GetServerRegion()
 	end
 end
+
+SetServerStat("-------- Server -------- :", "") task.wait(.5)
 
 SetServerStat(getfenv().workspace:GetAttribute("serverName"), "Name") task.wait(.1)
 SetServerStat(GetServerRegion(), "Region") task.wait(.1)
