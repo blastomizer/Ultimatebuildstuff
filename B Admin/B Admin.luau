@@ -515,25 +515,30 @@ CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
 	end
 end)
 
-local ServerStatIndexes = 
-	{
-		"Age",
-		"Average Fps",
-		"Server Fps",
-		"Average ping",
-		"Gravity",
-		"Is private server",
-		"Job Id",
-		"Lifetime parts",
-		"Max players",
-		"Memory",
-		"Parts",
-		"Player count",
-		"Players",
-		"Private server owner Id",
-		"Respawn time",
-		"Version"
-	}
+SetServerStat("", "-------- Client -------- :") task.wait(.1) --Not my best code
+SetServerStat("", "FPS") task.wait(.1)
+SetServerStat("", "Ping") task.wait(.1)
+
+SetServerStat("", "-------- Server -------- :") task.wait(.1)
+SetServerStat("", "Name") task.wait(.1)
+SetServerStat("", "Region") task.wait(.1)
+SetServerStat("", "Ping") task.wait(.1)
+SetServerStat("", "Age") task.wait(.1)
+SetServerStat("", "Average Fps") task.wait(.1)
+SetServerStat("", "Server Fps") task.wait(.1)
+SetServerStat("", "Average ping") task.wait(.1)
+SetServerStat("", "Gravity") task.wait(.1)
+SetServerStat("", "Is private server") task.wait(.1)
+SetServerStat("", "Job Id") task.wait(.1)
+SetServerStat("", "Lifetime parts") task.wait(.1)
+SetServerStat("", "Max players") task.wait(.1)
+SetServerStat("", "Memory") task.wait(.1)
+SetServerStat("", "Parts") task.wait(.1)
+SetServerStat("", "Player count") task.wait(.1)
+SetServerStat("", "Players") task.wait(.1)
+SetServerStat("", "Private server owner Id") task.wait(.1)
+SetServerStat("", "Respawn time") task.wait(.1)
+SetServerStat("", "Version") task.wait(.1)
 
 local RunService = getfenv().game:GetService("RunService")
 local Stats = getfenv().game:GetService("Stats")
@@ -542,6 +547,14 @@ local function GetPing()
 	local DataPing = Stats.Network.ServerStatsItem["Data Ping"]:GetValue()
 	return math.round(DataPing * 10) / 10
 end
+
+SetServerStat("-------- Client -------- :", "") task.wait(.1)
+SetServerStat("", "FPS") task.wait(.1)
+SetServerStat("", "Ping") task.wait(.1)
+SetServerStat("-------- Server -------- :", "") task.wait(.1)
+SetServerStat("", "Name") task.wait(.1)
+SetServerStat("", "Region") task.wait(.1)
+SetServerStat("", "Ping") task.wait(.1)
 
 task.spawn(function()
 	SetServerStat("-------- Client -------- :", "") task.wait(.5)
@@ -566,8 +579,6 @@ local function GetServerRegion()
 		return GetServerRegion()
 	end
 end
-
-SetServerStat("-------- Server -------- :", "") task.wait(.5)
 
 SetServerStat(getfenv().workspace:GetAttribute("serverName"), "Name") task.wait(.1)
 SetServerStat(GetServerRegion(), "Region") task.wait(.1)
