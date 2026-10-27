@@ -367,6 +367,7 @@ ServerStatTemplate.TextXAlignment = Enum.TextXAlignment.Left
 ServerStatTemplate.Parent = CommandTemplate
 ServerStatTemplate.TextEditable = false
 ServerStatTemplate.ClearTextOnFocus = false
+ServerStatsPage.RichText = true
 ServerStatTemplate.Visible = false
 local CloseButton = getfenv().Instance.new("TextButton")
 CloseButton.Name = "Close"
@@ -535,11 +536,11 @@ local ServerStatIndexes =
 		"Version"
 	}
 
-SetServerStat("", "-------- Client -------- :") task.wait(.1) --Not my best code
+SetServerStat("", "-------- <b>Client</b> -------- :") task.wait(.1) --Not my best code
 SetServerStat("", "FPS") task.wait(.1)
 SetServerStat("", "Ping") task.wait(.1)
 SetServerStat("", " ")
-SetServerStat("", "-------- Server -------- :") task.wait(.1)
+SetServerStat("", "-------- <b>Server</b> -------- :") task.wait(.1)
 SetServerStat("", "Name") task.wait(.1)
 SetServerStat("", "Region") task.wait(.1)
 SetServerStat("", "Ping") task.wait(.1)
@@ -564,17 +565,16 @@ local RunService = getfenv().game:GetService("RunService")
 local Stats = getfenv().game:GetService("Stats")
 
 local function GetPing()
-	local DataPing = Stats.Network.ServerStatsItem["Data Ping"]:GetValue()
-	return math.round(DataPing * 10) / 10
+	local DataPing = LocalPlayer:GetNetworkPing()
+	return math.round(DataPing * 2000 * 10) / 10 .. "ms"
 end
 
 task.spawn(function()
-	SetServerStat("-------- Client -------- :", "") task.wait(.5)
 	while true do
 		local DeltaTime = RunService.RenderStepped:Wait()
 		local CurrentFps = 1 / DeltaTime
-		SetServerStat(math.round(CurrentFps * 10) / 10, "FPS") task.wait(.1)
-		SetServerStat(GetPing(), "Ping") task.wait(.5)
+		SetServerStat(math.round(CurrentFps * 10) / 10, "FPS")
+		SetServerStat(GetPing(), "Ping")
 		task.wait(10)
 	end
 end)
