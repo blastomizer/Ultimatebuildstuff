@@ -194,9 +194,9 @@ UiGradient.Color = ColorSequence.new({
 })
 UiGradient.Rotation = -90
 UiGradient.Transparency = NumberSequence.new({
-	NumberSequenceKeypoint.new(0, 0),
-	NumberSequenceKeypoint.new(0.5, 0),
-	NumberSequenceKeypoint.new(1, 0.35)
+	NumberSequenceKeypoint.new(0, 0.2),
+	NumberSequenceKeypoint.new(0.5, 0.4),
+	NumberSequenceKeypoint.new(1, 0.6)
 })
 UiGradient.Parent = MainFrame
 local ContentFrame = getfenv().Instance.new("Frame")
@@ -542,12 +542,12 @@ local function GetPing()
 end
 
 task.spawn(function()
-	SetServerStat("---- Client ---- :", "") task.wait(.1)
+	SetServerStat("---- Client ---- :", "") task.wait(.5)
 	while true do
 		local DeltaTime = RunService.RenderStepped:Wait()
 		local CurrentFps = 1 / DeltaTime
 		SetServerStat(math.round(CurrentFps * 10) / 10, "FPS") task.wait(.1)
-		SetServerStat(GetPing(), "Ping") task.wait(.1)
+		SetServerStat(GetPing(), "Ping") task.wait(.5)
 		SetServerStat("---- Server ---- :", "") task.wait(.1)
 		task.wait(10)
 	end
