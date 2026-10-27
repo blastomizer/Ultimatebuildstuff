@@ -50,11 +50,11 @@ local success, result = pcall(function()
 					Seat.Size = Vector3.new(5, 0.5, 5)
 					Seat.Anchored = true
 					Seat.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position
-					task.wait(0.5)
+					task.wait(0.25)
 					--print("teleported")
 					local plr2CFrame = plr2.Character:GetPivot()
 					Seat.CFrame = plr2CFrame
-					task.wait(0.5)
+					task.wait(0.1)
 					Seat:Destroy()
 					--print("seatbroke")
 				end)
