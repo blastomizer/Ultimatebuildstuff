@@ -1,4 +1,4 @@
 {
-  "Version": 4,
-  "Changelog": "Commands are handled differently, also added a keybind for the command bar."
+  "Version": 5,
+  "Changelog": "Fixed 2 commands, supposedly"
 }
