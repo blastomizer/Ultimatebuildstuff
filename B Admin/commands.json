@@ -35,6 +35,18 @@
       "Aliases": ["stats", "server"],
       "Code": "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/Commands/ServerStats.luau",
       "Function": "Opens the server stats page."
+    },
+    { 
+      "CommandName": "mute",
+      "Aliases": [],
+      "Code": "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/Commands/MuteUnmute.luau",
+      "Function": "mute <player/others/disowned>'s soundblocks."
+    },
+    { 
+      "CommandName": "unmute",
+      "Aliases": [],
+      "Code": "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/Commands/MuteUnmute.luau",
+      "Function": "unmute <player/others/disowned>'s soundblocks."
     }
   ]
 }
