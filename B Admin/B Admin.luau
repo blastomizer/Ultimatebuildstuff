@@ -198,9 +198,9 @@ UiGradient.Color = ColorSequence.new({
 })
 UiGradient.Rotation = -90
 UiGradient.Transparency = NumberSequence.new({
-	NumberSequenceKeypoint.new(0, 0.15),
-	NumberSequenceKeypoint.new(0.5, 0.15),
-	NumberSequenceKeypoint.new(1, 0.15)
+	NumberSequenceKeypoint.new(0, 0.25),
+	NumberSequenceKeypoint.new(0.5, 0.25),
+	NumberSequenceKeypoint.new(1, 0.25)
 })
 UiGradient.Parent = MainFrame
 local ContentFrame = getfenv().Instance.new("Frame")
