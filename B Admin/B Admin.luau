@@ -12,7 +12,7 @@ local function SendMsg(Input)
 	getfenv().game:GetService("Debris"):AddItem(sound, 3)
 end
 
-local CurrentVersion = 9
+local CurrentVersion = 10
 SendMsg("Launching B Admin (Version " .. CurrentVersion .. ") Created by Blastomizer")
 local HttpService = game:GetService("HttpService")
 local Players = getfenv().game:GetService("Players")
@@ -145,7 +145,7 @@ CommandBarFrame.Name = "CommandBarFrame"
 CommandBarFrame.AnchorPoint = Vector2.new(1, 1)
 CommandBarFrame.BackgroundColor3 = Color3.fromRGB(30, 32, 36)
 CommandBarFrame.Position = UDim2.new(1, -20, 1, -20)
-CommandBarFrame.Size = UDim2.new(0, 300, 0, 35)
+CommandBarFrame.Size = UDim2.new(0, 300, 0, 20)
 CommandBarFrame.Parent = ScreenGuiInstance
 local CommandBarCorner = getfenv().Instance.new("UICorner")
 CommandBarCorner.CornerRadius = UDim.new(0, 6)
@@ -198,9 +198,9 @@ UiGradient.Color = ColorSequence.new({
 })
 UiGradient.Rotation = -90
 UiGradient.Transparency = NumberSequence.new({
-	NumberSequenceKeypoint.new(0, 0.3),
-	NumberSequenceKeypoint.new(0.5, 0.3),
-	NumberSequenceKeypoint.new(1, 0.4)
+	NumberSequenceKeypoint.new(0, 0.15),
+	NumberSequenceKeypoint.new(0.5, 0.15),
+	NumberSequenceKeypoint.new(1, 0.15)
 })
 UiGradient.Parent = MainFrame
 local ContentFrame = getfenv().Instance.new("Frame")
@@ -394,7 +394,7 @@ end)
 
 local function SetServerStat(Txt, Index, Centered)
 	local Stat = nil
-	
+
 	if not ServerStatsPage:FindFirstChild(Index) then
 		Stat = ServerStatTemplate:Clone()
 		Stat.Name = Index
@@ -403,9 +403,9 @@ local function SetServerStat(Txt, Index, Centered)
 	else
 		Stat = ServerStatsPage:FindFirstChild(Index)
 	end
-	
+
 	Stat.Text = Index .. ": " .. tostring(Txt)
-	
+
 	if Centered and Centered == true then
 		Stat.TextXAlignment = Enum.TextXAlignment.Center
 	end
