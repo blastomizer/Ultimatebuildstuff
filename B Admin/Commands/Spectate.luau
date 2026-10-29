@@ -32,12 +32,12 @@ local success, result = pcall(function()
 			if plr1.Name ~= LocalPlayer.Name then
 				print("Currently spectating " .. plr1.Name .. ". (Spectate yourself to exit; your cursor has been hidden)")
 				if h then h.Enabled = false end
+				getfenv().workspace.CurrentCamera.CameraSubject = plr1.Character.Humanoid
 			else
+				getfenv().workspace.CurrentCamera.CameraSubject = plr1.Character.Humanoid
 				if h then h.Enabled = true end
 				warn("Cursor visible")
 			end
-
-			getfenv().workspace.CurrentCamera.CameraSubject = plr1.Character.Humanoid
 		end
 	end
 end)
