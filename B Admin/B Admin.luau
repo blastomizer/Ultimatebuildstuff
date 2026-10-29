@@ -12,20 +12,24 @@ local function SendMsg(Input)
 	getfenv().game:GetService("Debris"):AddItem(sound, 3)
 end
 
-local CurrentVersion = 10
+local CurrentVersion = 11
 SendMsg("Launching B Admin (Version " .. CurrentVersion .. ") Created by Blastomizer")
 local HttpService = game:GetService("HttpService")
 local Players = getfenv().game:GetService("Players")
 
 function cleanup()
-	-- cleanup
 	if Players.LocalPlayer.PlayerGui:FindFirstChild("BAdmin") then
 		Players.LocalPlayer.PlayerGui:FindFirstChild("BAdmin"):Destroy()
 	end
-	for i, v in pairs(workspace:GetChildren()) do
-		if v.Name == "ServerInfo" and v:GetAttribute("Owner") == game.Players.LocalPlayer.UserId then
-			if v:GetAttribute("DisplayName") == "BADMIN_SERVERINFOBLOCK" then
-				v:Destroy()
+	for Index, Item in pairs(workspace:GetChildren()) do
+		if Item.Name == "ServerInfo" and Item:GetAttribute("Owner") == game.Players.LocalPlayer.UserId then
+			if Item:GetAttribute("DisplayName") == "BADMIN_SERVERINFOBLOCK" then
+				Item:Destroy()
+			end
+		elseif Item.Name == "Code" and Item:GetAttribute("Owner") == game.Players.LocalPlayer.UserId then
+			local DisplayName = Item:GetAttribute("DisplayName")
+			if DisplayName and string.match(DisplayName, "^BADMIN_CODEBLOCK") then
+				Item:Destroy()
 			end
 		end
 	end
@@ -492,6 +496,19 @@ local function h(str)
 	end
 end
 
+local CodeBlockPool = {}
+local PoolSize = 3
+local CurrentIndex = 1
+
+for Index = 1, PoolSize do -- Make multiple code blocks for running commands at the same time
+	local Block = Instance.new("Code")
+	Block.Anchored = true
+	Block.Position = Vector3.new(1000000, 34574 + Index, 1000000)
+	Block.Size = Vector3.one
+	Block:SetAttribute("DisplayName", "BADMIN_CODEBLOCK_" .. Index)
+	table.insert(CodeBlockPool, Block)
+end
+
 CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
 	if EnterPressed then
 		local InputText = string.gsub(CommandInput.Text, "^%s+", "")
@@ -500,14 +517,15 @@ CommandInput.FocusLost:Connect(function(EnterPressed, InputObject)
 			if #SplitText > 0 then
 				local TypedCommand = SplitText[1]:lower()
 				local CommandFound = false
-				for i, v in pairs(Commands) do
-					if TypedCommand == v.CommandName or table.find(v.Aliases, TypedCommand) then
+				for Index, CommandData in pairs(Commands) do
+					if TypedCommand == CommandData.CommandName or table.find(CommandData.Aliases, TypedCommand) then
 						CommandFound = true
-						local RawCode = v.Code
+						local RawCode = CommandData.Code
 						if RawCode then
-							local ExecutableCode = v.Code:gsub("!RAWTEXT!", InputText)
-							local CodeBlock = Instance.new("Code")
-							CodeBlock:SetAttribute("Code", ExecutableCode .. "\n task.wait(5) script:Destroy()")
+							local ExecutableCode = RawCode:gsub("!RAWTEXT!", InputText)
+							local CodeBlock = CodeBlockPool[CurrentIndex]
+							CodeBlock:SetAttribute("Code", ExecutableCode)
+							CurrentIndex = (CurrentIndex % PoolSize) + 1
 						else
 							warn("Code was unexpectedly not fetched, cannot run command.")
 						end
