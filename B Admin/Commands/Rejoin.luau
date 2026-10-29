@@ -4,7 +4,7 @@ local success, result = pcall(function()
 	-- Code here
 	local TeleportService = getfenv().game:GetService("TeleportService")
 	local LocalPlayer = getfenv().game:GetService("Players").LocalPlayer
-	TeleportService:TeleportToPlaceInstance(getfenv().game.PlaceId, getfenv().game.JobId, LocalPlayer)
+	TeleportService:Teleport(getfenv().game.PlaceId, LocalPlayer)
 end)
 
 if not success then
