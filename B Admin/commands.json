@@ -35,12 +35,6 @@
       "Aliases": ["stats", "server"],
       "Code": "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/Commands/ServerStats.luau",
       "Function": "Opens the server stats page."
-    },
-    {
-      "CommandName": "rejoin",
-      "Aliases": ["rej"],
-      "Code": "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/Commands/Rejoin.luau",
-      "Function": "Rejoin the game."
     }
   ]
 }
