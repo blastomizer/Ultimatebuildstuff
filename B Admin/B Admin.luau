@@ -105,14 +105,8 @@ local function CheckIfWhitelisted()
 			return true
 		else
 			SendMsg("Failed to pass security, TERMINATING!")
-			script:SetAttribute("Code", [[
-local Players = getfenv().game:GetService("Players")
-local Gui = Players.LocalPlayer.PlayerGui
-if Gui:FindFirstChild("BAdmin") then
-Gui:FindFirstChild("BAdmin"):Destroy()
-end
-script:Destroy()
-]])
+			cleanup()
+			script:Destroy()
 			return false
 		end
 	else
@@ -228,7 +222,7 @@ UiStroke.Color = Color3.fromRGB(70, 75, 85)
 UiStroke.Thickness = 1
 UiStroke.Parent = MainFrame
 local MenuPage = getfenv().Instance.new("Frame")
-MenuPage.Name = "Menu"
+MenuPage.Name = "B Admin"
 MenuPage.BackgroundTransparency = 1
 MenuPage.Size = UDim2.new(1, 0, 1, 0)
 MenuPage.LayoutOrder = 1
