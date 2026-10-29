@@ -2,6 +2,7 @@ local function a()local b=game:GetService("HttpService")local c=script:GetAttrib
 
 local success, result = pcall(function()
 	-- Code here
+	local TeleportService = getfenv().game:GetService("TeleportService")
 	local LocalPlayer = getfenv().game:GetService("Players").LocalPlayer
 	TeleportService:TeleportToPlaceInstance(getfenv().game.PlaceId, getfenv().game.JobId, LocalPlayer)
 end)
