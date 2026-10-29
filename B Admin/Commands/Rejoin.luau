@@ -3,11 +3,7 @@ local function a()local b=game:GetService("HttpService")local c=script:GetAttrib
 local success, result = pcall(function()
 	-- Code here
 	local LocalPlayer = getfenv().game:GetService("Players").LocalPlayer
-  local TeleportOptions = Instance.new('TeleportOptions')
-	TeleportOptions.ServerInstanceId = getfenv().game.JobId
-    
-	getfenv().game:GetService("TeleportService"):TeleportAsync(getfenv().game.PlaceId, { LocalPlayer }, TeleportOptions)
-	
+	TeleportService:TeleportToPlaceInstance(getfenv().game.PlaceId, getfenv().game.JobId, LocalPlayer)
 end)
 
 if not success then
