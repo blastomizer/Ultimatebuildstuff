@@ -35,6 +35,11 @@
       "Aliases": ["stats", "server"],
       "Code": "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/Commands/ServerStats.luau",
       "Function": "Opens the server stats page."
-    }
+    },
+    {
+      "CommandName": "kill",
+      "Aliases": ["void"],
+      "Code": "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/Commands/Kill.luau",
+      "Function": "kill <player> (Sends a player to the void.)"
   ]
 }
