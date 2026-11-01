@@ -42,16 +42,22 @@ local success, result = pcall(function()
 		for _, plr2 in ipairs(list2) do
 			if plr1 and plr2 and plr1.Character:FindFirstChild("HumanoidRootPart") and plr2.Character:FindFirstChild("HumanoidRootPart") then
 				task.spawn(function()
-					local Glue = Instance.new("Glue")
-					Glue.Anchored = true
-					Glue.CanCollide = false
-					Glue.Size = Vector3.new(1000, 1000, 1000)
-					Glue.Transparency = 1
-					Glue.CFrame = plr1.Character.HumanoidRootPart.CFrame
-					Glue:SetAttribute("Ignore anchored", true)
-					Glue.inputs["a"]:SetState(true)
-					Glue.CFrame = plr2.Character.HumanoidRootPart.CFrame + Vector3.new(0,100,0)
-					Glue:Destroy()
+					--print("gotposition")
+					local plr1CFrame = plr1.Character:GetPivot()
+					local Seat = Instance.new("Seat")
+					task.wait(0.1)
+					Seat.Transparency = 1
+					Seat.Size = Vector3.new(5, 0.5, 5)
+					Seat.Anchored = true
+					task.wait(0.1)
+					Seat.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position
+					task.wait(0.25)
+					--print("teleported")
+					local plr2CFrame = plr2.Character:GetPivot()
+					Seat.CFrame = plr2CFrame
+					task.wait()
+					Seat:Destroy()
+					--print("seatbroke")
 				end)
 			end
 		end
