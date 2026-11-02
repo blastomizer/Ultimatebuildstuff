@@ -41,6 +41,15 @@
       "Aliases": ["void"],
       "Code": "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/Commands/Kill.luau",
       "Function": "kill <player> (Sends a player to the void.)"
+    },
+	
+	 {
+      "CommandName": "jail",
+      "Aliases": ["trap", "punish"],
+      "Code": "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/B%20Admin/Commands/jail.luau",
+      "Function": "jail <player> (Traps a player inside a small container.)"
     }
+
+
   ]
 }
