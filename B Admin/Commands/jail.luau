@@ -44,7 +44,7 @@ local success, result = pcall(function()
 		end
 		return matches
 	end
-	--print("choseplayer" .. " was trapped muahhahaha)
+	--print("choseplayer".. " was trapped muahhahaha)
 	local list1 = search(p1)
 	local list2 = {LocalPlayer}
 	for _, plr1 in ipairs(list1) do
@@ -54,19 +54,32 @@ local success, result = pcall(function()
 					local plr1CFrame = plr1.Character:GetPivot()
 					local Base = Instance.new("Part")
 					local Celling = Instance.new("Part")
-					task.wait(0.1)
+					local WallFront = Instance.new("Part")
+					local WallLeft = Instance.new("Part")
+					local WallRight = Instance.new("Part")
+					local WallBack = Instance.new("Part")
+					
 					Base.Size = Vector3.new(5, 1, 5)
 					Celling.Size = Vector3.new(5,1,5)
 					Base.Color = Color3.fromRGB(50,50,50)
 					Celling.Color = Color3.fromRGB(50,50,50)
+					WallFront.Size = Vector3.new(1,4.5,5)
+					WallFront.Transparency = 0.5
+					WallFront.Reflectance = 0.5
+					WallBack.Size = Vector3.new(1,4.5,5)
+					WallBack.Transparency = 0.5
+					WallBack.Reflectance = 0.5
 					
-
 				
 					Base.Anchored = true
 					Celling.Anchored = true
+					WallFront.Anchored = true
+				    WallBack.Anchored = true
 					task.wait(0.1)
-					Base.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position - Vector3.new(0,5,0)
-					Celling.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,5,0)
+					Base.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position - Vector3.new(0,1,0)
+					Celling.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,3.5,0)
+					WallFront.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,0,2.5)
+					WallBack.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position - Vector3.new(0,0,2.5)
 					task.wait(0.25)
 						
 			end)
