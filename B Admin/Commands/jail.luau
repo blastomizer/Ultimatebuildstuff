@@ -61,25 +61,36 @@ local success, result = pcall(function()
 					
 					Base.Size = Vector3.new(5, 1, 5)
 					Celling.Size = Vector3.new(5,1,5)
+					Celling.Material = "SmoothPlastic"
+					Base.Material = "SmoothPlastic"
 					Base.Color = Color3.fromRGB(50,50,50)
 					Celling.Color = Color3.fromRGB(50,50,50)
-					WallFront.Size = Vector3.new(1,4.5,5)
+					WallFront.Size = Vector3.new(1,6.5,5)
 					WallFront.Transparency = 0.5
 					WallFront.Reflectance = 0.5
-					WallBack.Size = Vector3.new(1,4.5,5)
+					WallBack.Size = Vector3.new(1,6.5,5)
 					WallBack.Transparency = 0.5
 					WallBack.Reflectance = 0.5
-					
+					WallLeft.Size = Vector3.new(5,6.5,1)
+					WallLeft.Transparency = 0.5
+					WallLeft.Reflectance = 0.5
+					WallRight.Size = Vector3.new(5,6.5,1)
+					WallRight.Transparency = 0.5
+					WallRight.Reflectance = 0.5
+													
 				
 					Base.Anchored = true
 					Celling.Anchored = true
 					WallFront.Anchored = true
 				    WallBack.Anchored = true
 					task.wait(0.1)
-					Base.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position - Vector3.new(0,1,0)
-					Celling.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,3.5,0)
+					Base.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,-2.5,0)
+					Celling.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,3,0)
 					WallFront.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,0,2.5)
-					WallBack.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position - Vector3.new(0,0,2.5)
+					WallBack.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,0,-2.5)
+					WallLeft.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(-2.5,0,0)
+					WallRight.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(2.5,0,0)
+
 					task.wait(0.25)
 						
 			end)
