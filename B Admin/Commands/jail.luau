@@ -59,8 +59,8 @@ local success, result = pcall(function()
 					local WallRight = Instance.new("Part")
 					local WallBack = Instance.new("Part")
 					
-					Base.Size = Vector3.new(5, 1, 5)
-					Celling.Size = Vector3.new(5,1,5)
+					Base.Size = Vector3.new(5.5, 1, 5.5)
+					Celling.Size = Vector3.new(5.5,1,5.5)
 					Celling.Material = "SmoothPlastic"
 					Base.Material = "SmoothPlastic"
 					Base.Color = Color3.fromRGB(50,50,50)
@@ -83,9 +83,11 @@ local success, result = pcall(function()
 					Celling.Anchored = true
 					WallFront.Anchored = true
 				    WallBack.Anchored = true
+					WallLeft.Anchored = true
+				    WallRight.Anchored = true
 					task.wait(0.1)
-					Base.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,-2.5,0)
-					Celling.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,3,0)
+					Base.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,-3,0)
+					Celling.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,4.5,0)
 					WallFront.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,0,2.5)
 					WallBack.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,0,-2.5)
 					WallLeft.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(-2.5,0,0)
