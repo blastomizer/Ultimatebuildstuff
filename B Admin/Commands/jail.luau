@@ -86,12 +86,12 @@ local success, result = pcall(function()
 					WallLeft.Anchored = true
 				    WallRight.Anchored = true
 					task.wait(0.1)
-					Base.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,-3,0)
-					Celling.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,3.5,0)
-					WallFront.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,0,2.5)
+					Base.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,-2.7,0)
+					Celling.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,4.7,0)
+					WallFront.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,0.7,2.5)
 					WallBack.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(0,1,-2.5)
-					WallLeft.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(-2.5,1,0)
-					WallRight.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(2.5,1,0)
+					WallLeft.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(-2.5,0.7,0)
+					WallRight.Position = plr1.Character:FindFirstChild("HumanoidRootPart").Position + Vector3.new(2.5,0.7,0)
 
 					task.wait(0.25)
 						
