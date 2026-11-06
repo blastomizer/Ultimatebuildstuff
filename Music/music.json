@@ -83,6 +83,7 @@
     },
     {
         "Songs": [
+            { "Pitch": 1, "Title": "NYAN CAT RMX", "SoundID": 78152030908975 },
             { "Pitch": 0.1, "Title": "Black Hole Sun (Soundgarden)", "SoundID": 93744571832581 },
             { "Pitch": 0.09, "Title": "Creation Of Hatred", "SoundID": 111570672062911 },
             { "Pitch": 0.15, "Title": "Famine", "SoundID": 108970961890401 },
