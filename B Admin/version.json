@@ -1,4 +1,4 @@
 {
-  "Version": 11,
-  "Changelog": "Commands now run faster"
+  "Version": 12,
+  "Changelog": "Fixed infinite wait for server region fetch"
 }
