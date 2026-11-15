@@ -12,7 +12,7 @@ local function SendMsg(Input)
 	getfenv().game:GetService("Debris"):AddItem(sound, 3)
 end
 
-local CurrentVersion = 11
+local CurrentVersion = 12
 SendMsg("Launching B Admin (Version " .. CurrentVersion .. ") Created by Blastomizer")
 local HttpService = game:GetService("HttpService")
 local Players = getfenv().game:GetService("Players")
@@ -603,8 +603,7 @@ local function GetServerRegion()
 		return Data.regionName .. ", " .. Data.country
 	else
 		SendMsg("Error fetching server region: " .. Data .. " (Trying again in 10 seconds)")
-		task.wait(10)
-		return GetServerRegion()
+		return "Error"
 	end
 end
 
