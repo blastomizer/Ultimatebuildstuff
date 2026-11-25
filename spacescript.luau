@@ -1,7 +1,4 @@
 ---------------------------------------------------------------------------------------------
-
-local CurrentVersion = 0 -- forcibly update the code to make it compatible with the location change!
-
 local HttpService = game:GetService("HttpService")
 
 local CodeURL = "https://raw.githubusercontent.com/blastomizer/Ultimatebuildstuff/refs/heads/main/Spacescript/spacescript.luau"
@@ -21,26 +18,10 @@ local function FetchCode()
 	end
 end
 
-local function FetchVersion()
-	local Success, Data = pcall(function()
-		return HttpService:JSONDecode(HttpService:GetAsync(VersionURL))
-	end)
-
-	if Success then
-		return Data
-	else
-		warn("Error fetching version: " .. Data .. " (Trying again in 10 seconds)")
-		task.wait(10)
-		return FetchVersion()
-	end
-end
-
 local Code = FetchCode() 
-local Version = FetchVersion()
 
-if CurrentVersion < Version.Version then
 	task.wait(1)
-	warn("It seems that your code block is old! I've changed the location of the code, so your version would return 404. Updating...")
+	warn("Code location changed! Force-Updating...")
 	
 	local CurrentCode = 
 	"local Music = {\n\t" .. table.concat(Music, ", \n\t") .. "\n}\n" ..
@@ -62,4 +43,3 @@ if CurrentVersion < Version.Version then
 	task.wait(3)
 	print("Updated!")
 	script:SetAttribute("Code", CurrentCode .. Code)
-end
